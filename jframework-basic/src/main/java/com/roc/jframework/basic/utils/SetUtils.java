@@ -6,6 +6,8 @@ public class SetUtils {
 
     public static boolean isNullOrEmpty(Set set){
         if(set == null){
+
+            int a;
             return true;
         }
         return set.isEmpty();

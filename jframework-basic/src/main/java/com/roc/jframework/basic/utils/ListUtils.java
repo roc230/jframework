@@ -1,5 +1,6 @@
 package com.roc.jframework.basic.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListUtils {
@@ -9,5 +10,9 @@ public class ListUtils {
             return true;
         }
         return list.isEmpty();
+    }
+
+    public static <T>  List<T> newArrayList(){
+        return new ArrayList<>();
     }
 }

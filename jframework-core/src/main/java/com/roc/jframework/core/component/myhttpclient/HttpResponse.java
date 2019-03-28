@@ -1,4 +1,4 @@
-package com.roc.jframework.core.httpclient;
+package com.roc.jframework.core.component.myhttpclient;
 
 public class HttpResponse {
 

@@ -1,4 +1,4 @@
-package com.roc.jframework.core.httpclient;
+package com.roc.jframework.core.component.myhttpclient;
 
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.core.utils.InputStreamUtils;

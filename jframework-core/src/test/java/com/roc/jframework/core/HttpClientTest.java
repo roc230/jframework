@@ -1,8 +1,8 @@
 package com.roc.jframework.core;
 
 
-import com.roc.jframework.core.httpclient.HttpRequests;
-import com.roc.jframework.core.httpclient.HttpResponse;
+import com.roc.jframework.core.component.myhttpclient.HttpRequests;
+import com.roc.jframework.core.component.myhttpclient.HttpResponse;
 import org.junit.Test;
 
 public class HttpClientTest {

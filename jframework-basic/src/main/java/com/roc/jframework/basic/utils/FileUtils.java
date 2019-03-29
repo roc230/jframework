@@ -33,6 +33,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 保存文件
+     * @param content
+     * @param file
+     * @param cover
+     */
     public static void saveAsFile(String content, File file, boolean cover){
         try {
             if(file.exists() && cover == false){
@@ -53,6 +59,11 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 读文件内容到StringBuffer
+     * @param buffer StringBuffer
+     * @param filepath 文件路径
+     */
     public static void readToBuffer(StringBuffer buffer, String filepath){
         try {
             InputStream inputStream = new FileInputStream(filepath);
@@ -71,6 +82,11 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 把文件读出为字符串
+     * @param filepath 文件路径
+     * @return
+     */
     public static String readAsString(String filepath){
         StringBuffer sb = new StringBuffer();
         readToBuffer(sb, filepath);

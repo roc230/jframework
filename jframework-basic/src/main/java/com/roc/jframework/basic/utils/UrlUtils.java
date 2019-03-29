@@ -35,4 +35,22 @@ public class UrlUtils {
         }
         return newUrl;
     }
+
+    /**
+     * 获取url的域名
+     * @param url
+     * @return
+     */
+    public static String getDomain(String url){
+        return StringUtils.findByReg(url, "http[s]*://([^/]+)", 1);
+    }
+
+    /**
+     * 获取协义+域名，如：https://www.baidu.com
+     * @param url
+     * @return
+     */
+    public static String getSchemaAndDomain(String url){
+        return StringUtils.findByReg(url, "(http[s]*://[^/]+)", 1);
+    }
 }

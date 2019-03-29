@@ -35,10 +35,10 @@ public class StringUtils {
     }
 
     /**
-     * 通正则表达式查找内容
-     * @param content
-     * @param reg
-     * @param setIndex 组下标
+     * 通正则表达式查找目标内容
+     * @param content 基于查找的内容
+     * @param reg 正则表达式
+     * @param setIndex 组下标，如果没分组默认下标为0
      * @return
      */
     public static String findByReg(String content, String reg, Integer setIndex){

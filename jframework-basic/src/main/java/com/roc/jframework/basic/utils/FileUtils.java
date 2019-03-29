@@ -1,9 +1,6 @@
 package com.roc.jframework.basic.utils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FileUtils {
 
@@ -54,5 +51,29 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void readToBuffer(StringBuffer buffer, String filepath){
+        try {
+            InputStream inputStream = new FileInputStream(filepath);
+            String line = null;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            line = reader.readLine();
+            while(line != null){
+                buffer.append(line)
+                        .append("\n");
+                line = reader.readLine();
+            }
+            reader.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String readAsString(String filepath){
+        StringBuffer sb = new StringBuffer();
+        readToBuffer(sb, filepath);
+        return sb.toString();
     }
 }

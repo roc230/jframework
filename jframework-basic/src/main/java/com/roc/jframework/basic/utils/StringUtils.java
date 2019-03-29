@@ -1,5 +1,8 @@
 package com.roc.jframework.basic.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringUtils {
 
     /**
@@ -31,4 +34,19 @@ public class StringUtils {
         return false;
     }
 
+    /**
+     * 通正则表达式查找内容
+     * @param content
+     * @param reg
+     * @param setIndex 组下标
+     * @return
+     */
+    public static String findByReg(String content, String reg, Integer setIndex){
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(content);
+        if(matcher.find()){
+            return matcher.group(setIndex);
+        }
+        return null;
+    }
 }

@@ -35,4 +35,24 @@ public class FileUtils {
             e.printStackTrace();
         }
     }
+
+    public static void saveAsFile(String content, File file, boolean cover){
+        try {
+            if(file.exists() && cover == false){
+                System.out.println("File is Exist! No write content to it.");
+                return ;
+            }
+
+            //文件未创建
+            file.createNewFile();
+
+            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), false);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(content);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

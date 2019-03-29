@@ -1,5 +1,6 @@
 package com.roc.jframework.crawler.utils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -45,5 +46,41 @@ public class SeleniumUtils {
         for(WebElement e : elist){
             System.out.println(e.getText());
         }
+    }
+
+    public static WebElement findElement(WebDriver e, By by){
+        try{
+            return e.findElement(by);
+        }catch (Exception e1){
+
+        }
+        return null;
+    }
+
+    public static WebElement findElement(WebElement e, By by){
+        try{
+            return e.findElement(by);
+        }catch (Exception e1){
+
+        }
+        return null;
+    }
+
+    public static List<WebElement> findElements(WebDriver e, By by){
+        try {
+            return e.findElements(by);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<WebElement> findElements(WebElement e, By by){
+        try {
+            return e.findElements(by);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return null;
     }
 }

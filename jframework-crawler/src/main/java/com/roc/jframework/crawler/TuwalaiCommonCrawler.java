@@ -1,11 +1,14 @@
 package com.roc.jframework.crawler;
 
+import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
+import com.roc.jframework.crawler.selenium.DriverPath;
+import com.roc.jframework.crawler.selenium.WebDriverBuilder;
 import com.roc.jframework.crawler.utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -58,7 +61,12 @@ public class TuwalaiCommonCrawler {
      * @param url
      */
     public void execute(String url){
-        WebDriver driver = SeleniumUtils.chrome();
+        WebDriver driver = WebDriverBuilder.create()
+                .driverPath(DriverPath.CHROME_DRIVER_PATH)
+                .headless(false)
+                .loadImg(false)
+                .userAgent(UserAgent.CHROME)
+                .buildChrome();
         driver.get(url);
         try {
             Thread.sleep(2000);

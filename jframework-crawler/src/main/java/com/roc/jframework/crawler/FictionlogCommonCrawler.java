@@ -53,7 +53,9 @@ public class FictionlogCommonCrawler extends BasicCrawler{
         }
 
         List<Chapter> chapters = ListUtils.newArrayList();
-        for(Directory directory : directories){
+        for(int i = 0; i < max; i++){
+            Directory directory = directories.get(i);
+            System.out.println("\n开始抓取章节: " + directory.getName() + "\n");
             String html = RequestsBuilder.create()
                     .userAgent(UserAgent.CHROME)
                     .url(directory.getUrl())
@@ -94,7 +96,6 @@ public class FictionlogCommonCrawler extends BasicCrawler{
 
             chapters.add(chapter);
 
-            return chapters;
         }
 
         return chapters;

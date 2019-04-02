@@ -7,40 +7,95 @@ import com.google.gson.JsonParser;
 import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.basic.utils.StringUtils;
-import com.roc.jframework.basic.utils.UrlUtils;
 import com.roc.jframework.core.component.httpclient.RequestsBuilder;
 import com.roc.jframework.core.utils.JsoupUtils;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
+import com.roc.jframework.crawler.selenium.DriverPath;
+import com.roc.jframework.crawler.selenium.WebDriverBuilder;
+import com.roc.jframework.crawler.utils.SeleniumUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-import java.io.File;
 import java.util.List;
 
-public class FictionlogCommonCrawler extends AbstractCrawler {
+public class FictionlogCommonCrawler2 extends AbstractCrawler {
 
-    public static FictionlogCommonCrawler create(){
-        return new FictionlogCommonCrawler();
+    public static FictionlogCommonCrawler2 create(){
+        return new FictionlogCommonCrawler2();
     }
 
     @Override
     public void execute(String url) {
-        Novel novel = this.getDirectories(url);
 
-        List<Chapter> chapters = this.getChapters(novel.getDirectories());
+        WebDriver driver = WebDriverBuilder.create()
+                .userAgent(UserAgent.CHROME)
+                .loadImg(true)
+                .headless(false)
+                .driverPath(DriverPath.CHROME_DRIVER_PATH)
+                .buildChrome();
 
-        novel.setChapters(chapters);
+        login(driver, "roc230", "czp840527");
 
-        //save as json
-        saveAsJson(novel, new File("d:/novel1/" + novel.getName() + ".json"));
-        //save as txt
-        saveAsTxt(novel, new File("d:/novel1/" + novel.getName() + ".txt"));
+        Novel novel = getDirectories(driver, url);
 
 
         System.out.println("end!");
+    }
+
+    private void login(WebDriver driver, String userName, String password){
+        driver.get("https://fictionlog.co/");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement loginBtn = SeleniumUtils.findElement(driver, By.cssSelector(".WithoutLoginNavbar__LoginButton-sc-1wcn44i-1"));
+        if(loginBtn == null){
+            System.out.println("查找登陆按钮失败!");
+            return ;
+        }
+
+        loginBtn.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement userNameInput = SeleniumUtils.findElement(driver, By.cssSelector("#login-username"));
+        if(userNameInput == null){
+            System.out.println("查找用户名输入框失败！");
+            return ;
+        }
+
+        WebElement passwordInput = SeleniumUtils.findElement(driver, By.cssSelector("#login-password"));
+        if(passwordInput == null){
+            System.out.println("查找密码输入框失败！");
+            return ;
+        }
+
+        WebElement submitBtn = SeleniumUtils.findElement(driver, By.linkText("เข้าสู่ระบบ"));
+        if(submitBtn == null){
+            System.out.println("查找登陆提交按钮失败！");
+            return ;
+        }
+
+        userNameInput.sendKeys(userName);
+        passwordInput.sendKeys(password);
+        submitBtn.click();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -98,12 +153,27 @@ public class FictionlogCommonCrawler extends AbstractCrawler {
         return chapters;
     }
 
-    private Novel getDirectories(String url){
+    private Novel getDirectories(WebDriver driver, String url){
+        driver.get(url);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        WebElement novelNameElement = SeleniumUtils.findElement(driver, By.cssSelector(".BookHeader__BookTitle-sc-7bc82j-5"));
+        if(novelNameElement == null){
+            return null;
+        }
+        String novelName = novelNameElement.getText();
+
+        return null;
+
+/*
         String html = RequestsBuilder.create()
                 .userAgent(UserAgent.CHROME)
                 .url(url)
-                .contentType("text/plain; charset=utf-8")
-                .header("access-control-allow-origin", "https://fictionlog.co")
                 .getAsString();
 
         Document doc = JsoupUtils.parse(html);
@@ -116,21 +186,18 @@ public class FictionlogCommonCrawler extends AbstractCrawler {
         String schemaAndDomain = UrlUtils.getSchemaAndDomain(url);
         List<Directory> directories = ListUtils.newArrayList();
         Elements alist = doc.select(".GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__MainWrapper-r5e2sp-8 > div > div > a");
-        for(int i = 0; i < alist.size(); i++){
-            if(i%2 == 0){
-                Element a = alist.get(i);
-                String href = schemaAndDomain + a.attr("href");
-                String title = a.selectFirst("div").text();
+        for(Iterator<Element> iter = alist.iterator(); iter.hasNext(); ){
+            Element a = iter.next();
+            String href = schemaAndDomain + a.attr("href");
+            String title = a.selectFirst("div").text();
 
-                Directory dir = new Directory();
-                dir.setUrl(href);
-                dir.setName(title);
+            Directory dir = new Directory();
+            dir.setUrl(href);
+            dir.setName(title);
 
-                directories.add(dir);
-            }
-            i++;
+            directories.add(dir);
         }
         novel.setDirectories(directories);
-        return novel;
+        return novel;*/
     }
 }

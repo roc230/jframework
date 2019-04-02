@@ -3,6 +3,7 @@ package com.roc.jframework.crawler;
 import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.basic.utils.ListUtils;
+import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.TimerUtils;
 import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.crawler.entity.Chapter;
@@ -16,15 +17,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class TuwalaiCommonCrawler {
+public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
 
     private Integer start = 0;
     private Integer max = 1;
     private Boolean append = false;
 
-    public static TuwalaiCommonCrawler create(){
-        return new TuwalaiCommonCrawler();
+    public static TuwalaiLoginCommonCrawler create(){
+        return new TuwalaiLoginCommonCrawler();
     }
 
     /**
@@ -32,7 +34,7 @@ public class TuwalaiCommonCrawler {
      * @param start
      * @return
      */
-    public TuwalaiCommonCrawler start(Integer start){
+    public TuwalaiLoginCommonCrawler start(Integer start){
         this.start = start;
         return this;
     }
@@ -42,7 +44,7 @@ public class TuwalaiCommonCrawler {
      * @param max
      * @return
      */
-    public TuwalaiCommonCrawler max(Integer max){
+    public TuwalaiLoginCommonCrawler max(Integer max){
         this.max = max;
         return this;
     }
@@ -52,7 +54,7 @@ public class TuwalaiCommonCrawler {
      * @param append
      * @return
      */
-    public TuwalaiCommonCrawler append(Boolean append){
+    public TuwalaiLoginCommonCrawler append(Boolean append){
         this.append = append;
         return this;
     }
@@ -68,6 +70,15 @@ public class TuwalaiCommonCrawler {
                 .loadImg(false)
                 .userAgent(UserAgent.CHROME)
                 .buildChrome();
+
+        if(login){
+            if(StringUtils.isAnyNullOrEmpty(username, password)){
+                System.out.println("请设置登陆用户名和密码");
+                return ;
+            }
+            login(driver, username, password);
+        }
+
         driver.get(url);
         TimerUtils.sleep(2000);
 
@@ -97,6 +108,36 @@ public class TuwalaiCommonCrawler {
 
         driver.quit();
     }
+
+    public void login(WebDriver driver, String username, String password){
+        String loginUrl = "https://accounts.ookbee.com/ServiceLogin?AppCode=TUNWALAI_209&RedirectUrl=http%3a%2f%2fwww.tunwalai.com%2fhome%2flogin%3fReturnUrl%3dhttp%253A%252F%252Fwww.tunwalai.com%252F";
+        driver.get(loginUrl);
+        TimerUtils.sleep(200);
+        WebElement userNameElement = SeleniumUtils.findElement(driver, By.cssSelector("#UserName"));
+        if(userNameElement == null){
+            System.out.println("找不到帐号输入框!");
+            return ;
+        }
+        WebElement passwordElement = SeleniumUtils.findElement(driver, By.cssSelector("#Password"));
+        if(passwordElement == null){
+            System.out.println("找不到密码输入框!");
+            return ;
+        }
+        WebElement submitBtn = SeleniumUtils.findElement(driver, By.cssSelector("button[type=submit]"));
+        if(submitBtn == null){
+            System.out.println("找不到提交按钮!");
+            return ;
+        }
+
+        userNameElement.sendKeys(username);
+        TimerUtils.sleep(200);
+        passwordElement.sendKeys(password);
+        TimerUtils.sleep(200);
+        submitBtn.click();
+        TimerUtils.sleep(500);
+    }
+
+
 
     public void saveAsTxt(Novel novel){
         StringBuffer sb = new StringBuffer();

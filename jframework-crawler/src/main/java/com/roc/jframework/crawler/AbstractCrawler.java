@@ -7,27 +7,48 @@ import com.roc.jframework.crawler.entity.Novel;
 
 import java.io.File;
 
-public abstract class BasicCrawler implements ICommonCrawler{
+public abstract class AbstractCrawler implements ICommonCrawler{
 
     protected Integer start = 0;
     protected Integer max = 1;
     protected Boolean append = false;
+    protected Boolean login = false;
+    protected String username;
+    protected String password;
 
     @Override
-    public BasicCrawler start(Integer start){
+    public AbstractCrawler start(Integer start){
         this.start = start;
         return this;
     }
 
     @Override
-    public BasicCrawler max(Integer max){
+    public AbstractCrawler max(Integer max){
         this.max = max;
         return this;
     }
 
     @Override
-    public BasicCrawler append(Boolean append){
+    public AbstractCrawler append(Boolean append){
         this.append = append;
+        return this;
+    }
+
+    @Override
+    public ICommonCrawler login(Boolean login) {
+        this.login = login;
+        return this;
+    }
+
+    @Override
+    public ICommonCrawler username(String username) {
+        this.username = username;
+        return this;
+    }
+
+    @Override
+    public ICommonCrawler password(String password) {
+        this.password = password;
         return this;
     }
 

@@ -1,6 +1,7 @@
 package com.roc.jframework.crawler;
 
 import com.roc.jframework.crawler.entity.Novel;
+import com.sun.org.apache.bcel.internal.generic.ICONST;
 
 import java.io.File;
 
@@ -23,6 +24,27 @@ public interface ICommonCrawler {
      * @param append
      */
     ICommonCrawler append(Boolean append);
+
+    /**
+     * 是否登陆
+     * @param login
+     * @return
+     */
+    ICommonCrawler login(Boolean login);
+
+    /**
+     * 设置用户名email
+     * @param username
+     * @return
+     */
+    ICommonCrawler username(String username);
+
+    /**
+     * 设置密码
+     * @param password
+     * @return
+     */
+    ICommonCrawler password(String password);
 
     /**
      * 执行抓取

@@ -6,8 +6,7 @@ import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicHeader;
 
 import java.io.IOException;
@@ -106,7 +105,10 @@ public class Requests implements IRequests{
 
     @Override
     public CloseableHttpResponse get(Boolean showUrl) {
-        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+        HttpClientBuilder httpClientBuilder = HttpClients
+                .custom()
+                .setDefaultCookieStore(new BasicCookieStore())  //set cookie store
+                .setRedirectStrategy(new LaxRedirectStrategy()); //set redirect strategy
 
         //set userAgent
         if(!StringUtils.isNullOrEmpty(this.userAgent)){

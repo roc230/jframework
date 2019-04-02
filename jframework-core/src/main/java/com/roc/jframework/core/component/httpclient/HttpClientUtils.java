@@ -3,6 +3,7 @@ package com.roc.jframework.core.component.httpclient;
 import com.roc.jframework.basic.utils.InputStreamUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -32,10 +33,17 @@ public class HttpClientUtils {
      */
     public static String getContent(HttpResponse response){
         try {
-            return InputStreamUtils.readToString(response.getEntity().getContent());
+            String content = EntityUtils.toString(response.getEntity());
+            EntityUtils.consume(response.getEntity());
+            return content;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        /*try {
+            return InputStreamUtils.readToString(response.getEntity().getContent());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         return null;
     }
 }

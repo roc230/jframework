@@ -1,6 +1,7 @@
 package com.roc.jframework.core.component.httpclient;
 
 import com.roc.jframework.basic.utils.InputStreamUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class RequestsBuilder {
     private String referer;
     private String xRequestedWith;
 
+    private HttpHost httpHost;
+
     //是否打印执行的url
     private Boolean showUrl = false;
 
@@ -30,6 +33,11 @@ public class RequestsBuilder {
 
     public static RequestsBuilder create(){
         return new RequestsBuilder();
+    }
+
+    public RequestsBuilder proxy(String ip, int port, String schema){
+        this.httpHost = new HttpHost(ip, port, schema);
+        return this;
     }
 
     /**
@@ -46,6 +54,7 @@ public class RequestsBuilder {
                 .contentType(contentType)
                 .charset(charset)
                 .referer(referer)
+                .proxy(httpHost.getHostName(), httpHost.getPort(), httpHost.getSchemeName())
                 .xRequestedWith(xRequestedWith);
         for(Map.Entry<String,String> h : headers.entrySet()){
             requests.header(h.getKey(), h.getValue());
@@ -59,6 +68,11 @@ public class RequestsBuilder {
     public CloseableHttpResponse get(){
         Requests requests = build();
         return requests.get(showUrl);
+    }
+
+    public CloseableHttpResponse post(){
+        Requests requests = build();
+        return requests.post();
     }
 
     /**

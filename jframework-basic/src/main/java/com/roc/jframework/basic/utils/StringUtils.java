@@ -20,6 +20,19 @@ public class StringUtils {
         return false;
     }
 
+    public static boolean isAnyNullOrEmpty(String... strings){
+        if(strings == null){
+            return true;
+        }
+
+        for(String str : strings){
+            if(str == null || str.trim().length() < 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 数中存在一个字符串为null或空串返回true，否则返回false
      * @param strs

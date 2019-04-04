@@ -162,13 +162,14 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         if(ListUtils.isNullOrEmpty(exlist)){
             return null;
         }
+        //展开所有下拉列表
         for(int i = 0; i < exlist.size(); i++){
             if(i != 0){
                 exlist.get(i).click();
                 TimerUtils.sleep(200);
             }
         }
-
+        //获取所有章节目录
         List<WebElement> cclist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0  .GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__RightItems-r5e2sp-6 > a"));
         if(ListUtils.isNullOrEmpty(cclist)){
             return null;
@@ -182,7 +183,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 //            return null;
 //        }
         for(int i = 0; i < cclist.size(); i++){
-            if(i%2 == 0){
+//            if(i%2 == 0){
                 WebElement we = cclist.get(i);
                 String href = we.getAttribute("href");
                 String title = "";
@@ -195,7 +196,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
                 dir.setName(title);
 
                 directories.add(dir);
-            }
+//            }
         }
 
         novel.setDirectories(directories);

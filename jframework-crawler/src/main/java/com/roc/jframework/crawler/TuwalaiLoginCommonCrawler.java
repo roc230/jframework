@@ -16,6 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -62,7 +63,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
     public void execute(String url){
         WebDriver driver = WebDriverBuilder.create()
                 .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                .headless(false)
+                .headless(true)
                 .loadImg(false)
                 .userAgent(UserAgent.CHROME)
                 .buildChrome();
@@ -97,10 +98,12 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
         novel.setDirectories(directories);
         novel.setChapters(chapters);
 
-        String json = JsonUtils.toString(novel);
-        FileUtils.saveAsFile(json, "d:/novel1/" + novel.getName() + ".json", true);
+//        String json = JsonUtils.toString(novel);
+//        FileUtils.saveAsFile(json, "d:/novel1/" + novel.getName() + ".json", true);
 
-        saveAsTxt(novel);
+        saveAsJson(novel, new File("d:/novel1/" + novel.getName() + ".json"));
+//        saveAsTxt(novel);
+        saveAsTxt(novel, new File("d:/novel1/" + novel.getName() + ".txt"));
 
         driver.quit();
     }
@@ -134,7 +137,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
     }
 
 
-
+/*
     public void saveAsTxt(Novel novel){
         StringBuffer sb = new StringBuffer();
         for(Chapter chapter : novel.getChapters()){
@@ -151,7 +154,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
             }
         }
         FileUtils.saveAsFile(sb.toString(), "d:/novel1/" + novel.getName() + ".txt", !append);
-    }
+    }*/
 
     /**
      * 获取章节内容
@@ -200,6 +203,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
             chapter.setParagraphs(paragraphs);
             chapter.setTitle(dir.getName());
             chapters.add(chapter);
+            System.out.println("-->已完成：" + chapter.getTitle());
         }
         return chapters;
     }

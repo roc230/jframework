@@ -39,8 +39,8 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
     public void execute(String url) {
         WebDriver driver = WebDriverBuilder.create()
                 .userAgent(UserAgent.CHROME)
-                .loadImg(true)
-                .headless(false)
+                .loadImg(false)
+                .headless(true)
                 .maximiazeWindow(false)
                 .driverPath(DriverPath.CHROME_DRIVER_PATH)
                 .buildChrome();
@@ -86,6 +86,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
     private List<Chapter> getChapters(WebDriver driver, List<Directory> directories){
         if(start < 0 || max > directories.size()){
             System.out.println("参数错误");
+            return null;
         }
 
         WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -115,6 +116,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
                 String paragraph = null;
                 WebElement strong = SeleniumUtils.findElement(p, By.cssSelector("strong"));
                 WebElement em = SeleniumUtils.findElement(p, By.cssSelector("em"));
+//                WebElement a = SeleniumUtils.findElement(p, By.cssSelector("a"));
                 if(strong != null){
                     paragraph = strong.getText();
                 }else if(em != null){
@@ -127,39 +129,6 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
                     parapraphs.add(paragraph);
                 }
             }
-
-            /*String html = RequestsBuilder.create()
-                    .userAgent(UserAgent.CHROME)
-                    .url(directory.getUrl())
-                    .getAsString();
-
-            String id = StringUtils.findByReg(html,"content=\"https://fictionlog.co/c/([a-zA-Z0-9]+)\"", 1);
-
-            Document doc = JsoupUtils.parse(html);
-
-            Element js = doc.selectFirst("#__NEXT_DATA__");
-            String json = js.html();
-            JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
-            JsonObject je = obj.get("props").getAsJsonObject()
-                    .get("serverState").getAsJsonObject()
-                    .getAsJsonObject("Chapter:" + id);
-
-
-
-
-            String title = je.get("title").getAsString();
-            JsonArray blocks = je.getAsJsonObject("contentRawState")
-                    .getAsJsonObject("json")
-                    .getAsJsonArray("blocks");
-            
-            List<String> parapraghs = ListUtils.newArrayList();
-            for(JsonElement e : blocks){
-                JsonObject jo = e.getAsJsonObject();
-                String p = jo.get("text").getAsString();
-                if(!StringUtils.isNullOrEmpty(p)){
-                    parapraghs.add(p);
-                }
-            }*/
 
             Chapter chapter = new Chapter();
             chapter.setTitle(title);
@@ -188,13 +157,33 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         novel.setUrl(url);
 
         List<Directory> directories = ListUtils.newArrayList();
-        List<WebElement> alist = SeleniumUtils.findElements(driver, By.cssSelector(".GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__MainWrapper-r5e2sp-8 > div > div > a"));
-        if(ListUtils.isNullOrEmpty(alist)){
+        //下拉列表
+        List<WebElement> exlist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0 > .GroupChapterRow__GroupWrapper-sc-1crfeny-1"));
+        if(ListUtils.isNullOrEmpty(exlist)){
             return null;
         }
-        for(int i = 0; i < alist.size(); i++){
+        for(int i = 0; i < exlist.size(); i++){
+            if(i != 0){
+                exlist.get(i).click();
+                TimerUtils.sleep(200);
+            }
+        }
+
+        List<WebElement> cclist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0  .GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__RightItems-r5e2sp-6 > a"));
+        if(ListUtils.isNullOrEmpty(cclist)){
+            return null;
+        }
+//        for(WebElement ee : cclist){
+//            System.out.println(ee.getText());
+//        }
+
+//        List<WebElement> alist = SeleniumUtils.findElements(driver, By.cssSelector(".GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__MainWrapper-r5e2sp-8 > div > div > a"));
+//        if(ListUtils.isNullOrEmpty(alist)){
+//            return null;
+//        }
+        for(int i = 0; i < cclist.size(); i++){
             if(i%2 == 0){
-                WebElement we = alist.get(i);
+                WebElement we = cclist.get(i);
                 String href = we.getAttribute("href");
                 String title = "";
                 WebElement ti = SeleniumUtils.findElement(we, By.cssSelector("div"));

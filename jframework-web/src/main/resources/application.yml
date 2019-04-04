@@ -1,0 +1,28 @@
+logging:
+  config: classpath:log/logback-spring.xml
+  path: d:/log
+spring:
+  application:
+    name: jframework-web
+  thymeleaf:
+    prefix: classpath:/templates/
+  resources:
+    static-locations: classpath:/static/,classpath:/templates/
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/minigame
+    username: root
+    password: root
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-wait-millis: 200
+
+mybatis:
+  config-location:
+
+server:
+  port: 8080

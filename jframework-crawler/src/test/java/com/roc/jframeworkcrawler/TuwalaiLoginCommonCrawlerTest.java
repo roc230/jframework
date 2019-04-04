@@ -1,15 +1,15 @@
 package com.roc.jframeworkcrawler;
 
 import com.roc.jframework.crawler.TuwalaiCommonCrawler;
+import com.roc.jframework.crawler.TuwalaiLoginCommonCrawler;
 
-public class TuwalaiCommonCrawlerTest {
+public class TuwalaiLoginCommonCrawlerTest {
 
     public static void main(String[] args){
 //        crawl1();
 //        crawl2();
 //        crawl3();
         crawl4();
-
     }
 
     public static void crawl1(){
@@ -23,10 +23,13 @@ public class TuwalaiCommonCrawlerTest {
 
     public static void crawl2(){
         String url = "http://www.tunwalai.com/story/184179/%E0%B8%AA%E0%B8%B1%E0%B8%81%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%89%E0%B8%B1%E0%B8%99%E0%B8%88%E0%B8%B0%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99-%E0%B8%8B%E0%B8%B8%E0%B8%9B%E0%B8%95%E0%B8%B2%E0%B8%A3%E0%B9%8C";
-        TuwalaiCommonCrawler.create()
+        TuwalaiLoginCommonCrawler.create()
                 .start(0)
                 .max(10)
                 .append(false)
+                .login(true)
+                .username("cuizhip@gmail.com")
+                .password("czp840527")
                 .execute(url);
     }
 

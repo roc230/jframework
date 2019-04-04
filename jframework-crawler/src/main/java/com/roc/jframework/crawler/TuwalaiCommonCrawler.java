@@ -1,10 +1,7 @@
 package com.roc.jframework.crawler;
 
 import com.roc.jframework.basic.constants.UserAgent;
-import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.basic.utils.ListUtils;
-import com.roc.jframework.basic.utils.TimerUtils;
-import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
@@ -14,47 +11,16 @@ import com.roc.jframework.crawler.utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.util.List;
 
-public class TuwalaiCommonCrawler {
-
-    private Integer start = 0;
-    private Integer max = 1;
-    private Boolean append = false;
+public class TuwalaiCommonCrawler extends AbstractCrawler {
 
     public static TuwalaiCommonCrawler create(){
         return new TuwalaiCommonCrawler();
-    }
-
-    /**
-     * 设置开始章节，从0开始算
-     * @param start
-     * @return
-     */
-    public TuwalaiCommonCrawler start(Integer start){
-        this.start = start;
-        return this;
-    }
-
-    /**
-     * 设置抓取的章节数量
-     * @param max
-     * @return
-     */
-    public TuwalaiCommonCrawler max(Integer max){
-        this.max = max;
-        return this;
-    }
-
-    /**
-     * 设置是否以追加的方式保存内容
-     * @param append
-     * @return
-     */
-    public TuwalaiCommonCrawler append(Boolean append){
-        this.append = append;
-        return this;
     }
 
     /**
@@ -64,12 +30,14 @@ public class TuwalaiCommonCrawler {
     public void execute(String url){
         WebDriver driver = WebDriverBuilder.create()
                 .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                .headless(false)
+                .headless(true)
                 .loadImg(false)
                 .userAgent(UserAgent.CHROME)
                 .buildChrome();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         driver.get(url);
-        TimerUtils.sleep(2000);
+//        TimerUtils.sleep(2000);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#tbody")));
 
         String novelName = null;
         try {
@@ -90,30 +58,11 @@ public class TuwalaiCommonCrawler {
         novel.setDirectories(directories);
         novel.setChapters(chapters);
 
-        String json = JsonUtils.toString(novel);
-        FileUtils.saveAsFile(json, "d:/novel1/" + novel.getName() + ".json", true);
+        saveAsJson(novel, new File("d:/novel1/" + novel.getName() + ".json"));
 
-        saveAsTxt(novel);
+        saveAsTxt(novel, new File("d:/novel1/" + novelName + ".txt"));
 
         driver.quit();
-    }
-
-    public void saveAsTxt(Novel novel){
-        StringBuffer sb = new StringBuffer();
-        for(Chapter chapter : novel.getChapters()){
-            //章节标题
-            String name = chapter.getTitle();
-            sb.append(name).append("\r\n").append("\r\n");
-            //内容段落
-            List<String> paragraphs = chapter.getParagraphs();
-            for(String p : paragraphs){
-                sb.append("\0\0\0\0\0\0\0\0")
-                        .append(p)
-                        .append("\r\n")
-                        .append("\r\n");
-            }
-        }
-        FileUtils.saveAsFile(sb.toString(), "d:/novel1/" + novel.getName() + ".txt", !append);
     }
 
     /**
@@ -131,8 +80,11 @@ public class TuwalaiCommonCrawler {
 
         for(int i = start; i < max; i++){
             Directory dir = directories.get(i);
+
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             driver.get(dir.getUrl());
-            TimerUtils.sleep(2000);
+//            TimerUtils.sleep(1000);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#story-detail")));
 
             List<WebElement> plist = SeleniumUtils.findElements(driver, By.cssSelector("#story-detail p"));
             if(ListUtils.isNullOrEmpty(plist)){
@@ -157,12 +109,14 @@ public class TuwalaiCommonCrawler {
                 }
 
                 paragraphs.add(ptxt);
+
             }
 
             Chapter chapter = new Chapter();
             chapter.setParagraphs(paragraphs);
             chapter.setTitle(dir.getName());
             chapters.add(chapter);
+            System.out.println("--->已完成：" + dir.getName());
         }
         return chapters;
     }

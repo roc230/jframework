@@ -21,10 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
 
-    private Integer start = 0;
-    private Integer max = 1;
-    private Boolean append = false;
-
     public static TuwalaiLoginCommonCrawler create(){
         return new TuwalaiLoginCommonCrawler();
     }

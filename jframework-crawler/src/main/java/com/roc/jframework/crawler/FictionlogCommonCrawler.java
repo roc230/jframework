@@ -50,38 +50,41 @@ public class FictionlogCommonCrawler extends AbstractCrawler {
         }
 
         List<Chapter> chapters = ListUtils.newArrayList();
-        for(int i = 0; i < max; i++){
+        for(int i = start; i < (start+max); i++){
             Directory directory = directories.get(i);
             System.out.println("\n开始抓取章节: " + directory.getName() + "\n");
             String html = RequestsBuilder.create()
                     .userAgent(UserAgent.CHROME)
                     .url(directory.getUrl())
                     .getAsString();
+
+            String id = StringUtils.findByReg(html,"content=\"https://fictionlog.co/c/([a-zA-Z0-9]+)\"", 1);
+
             Document doc = JsoupUtils.parse(html);
 
             Element js = doc.selectFirst("#__NEXT_DATA__");
             String json = js.html();
             JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
             JsonObject je = obj.get("props").getAsJsonObject()
-                    .get("serverState").getAsJsonObject();
+                    .get("serverState").getAsJsonObject()
+                    .getAsJsonObject("Chapter:" + id);
 
-            JsonObject first = null;
-            if(je.entrySet().size() > 0){
-                first = je.entrySet().iterator().next().getValue().getAsJsonObject();
-            }
 
-            String title = first.get("title").getAsString();
-            List<String> parapraghs = ListUtils.newArrayList();
-            JsonArray blocks = first.getAsJsonObject("contentRawState")
+
+
+            String title = je.get("title").getAsString();
+            JsonArray blocks = je.getAsJsonObject("contentRawState")
                     .getAsJsonObject("json")
                     .getAsJsonArray("blocks");
+
+            List<String> parapraghs = ListUtils.newArrayList();
             for(JsonElement e : blocks){
                 JsonObject jo = e.getAsJsonObject();
                 String p = jo.get("text").getAsString();
 
-                if(p.startsWith("----------")){
-                    break;
-                }
+//                if(p.startsWith("----------")){
+//                    break;
+//                }
                 if(!StringUtils.isNullOrEmpty(p)){
                     parapraghs.add(p);
                 }

@@ -3,140 +3,27 @@ package com.roc.jframework.core.component.httpclient;
 import com.roc.jframework.basic.utils.MapUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.UrlUtils;
-import com.roc.jframework.core.utils.JsonUtils;
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.HttpEntityWrapper;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.ssl.SSLContexts;
 
-import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Requests extends AbstractRequests{
-
-    private Map<String,String> params;
-    private Map<String,String> headers;
-    private String url;
-    private String userAgent;
-    private String charset = "utf-8";
-    private String contentType;
-    private String accept;
-    private String acceptEncoding;
-    private String acceptLanguage;
-    private String referer;
-    private String xRequestedWith;
-
-    private HttpHost httpHost;
-
-    public Requests(){
-        params = new HashMap<>();
-        headers = new HashMap<>();
-    }
-
-    @Override
-    public IRequests header(String name, String value) {
-        if(!StringUtils.isNullOrEmpty(name)){
-            headers.put(name, value);
-        }
-        return this;
-    }
-
-    @Override
-    public IRequests param(String name, String value) {
-        if(!StringUtils.isNullOrEmpty(name)){
-            params.put(name, value);
-        }
-        return this;
-    }
-
-    @Override
-    public IRequests userAgent(String userAgent) {
-        this.userAgent = userAgent;
-        return this;
-    }
-
-    @Override
-    public IRequests url(String url) {
-        this.url = url;
-        return this;
-    }
-
-    @Override
-    public IRequests charset(String charset) {
-        this.charset = charset;
-        return this;
-    }
-
-    @Override
-    public IRequests accept(String accept) {
-        this.accept = accept;
-        return this;
-    }
-
-    @Override
-    public IRequests acceptEncoding(String acceptEncoding) {
-        this.acceptEncoding = acceptEncoding;
-        return this;
-    }
-
-    @Override
-    public IRequests acceptLanguage(String acceptLanguage) {
-        this.acceptLanguage = acceptLanguage;
-        return this;
-    }
-
-    @Override
-    public IRequests contentType(String contentType) {
-        this.contentType = contentType;
-        return this;
-    }
-
-    @Override
-    public IRequests referer(String referer) {
-        this.referer = referer;
-        return this;
-    }
-
-    @Override
-    public IRequests xRequestedWith(String xRequestedWith) {
-        this.xRequestedWith = xRequestedWith;
-        return this;
-    }
-
-    @Override
-    public IRequests proxy(String ip, int port, String schema) {
-        this.httpHost = new HttpHost(ip, port, schema);
-        return this;
-    }
 
     @Override
     public CloseableHttpResponse get(Boolean showUrl) {

@@ -54,8 +54,10 @@ public class RequestsBuilder {
                 .contentType(contentType)
                 .charset(charset)
                 .referer(referer)
-                .proxy(httpHost.getHostName(), httpHost.getPort(), httpHost.getSchemeName())
                 .xRequestedWith(xRequestedWith);
+        if(httpHost != null){
+            requests.proxy(httpHost.getHostName(), httpHost.getPort(), httpHost.getSchemeName());
+        }
         for(Map.Entry<String,String> h : headers.entrySet()){
             requests.header(h.getKey(), h.getValue());
         }

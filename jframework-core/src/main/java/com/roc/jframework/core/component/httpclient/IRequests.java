@@ -56,6 +56,8 @@ public interface IRequests {
 
     IRequests xRequestedWith(String xRequestedWith);
 
+    IRequests origin(String origin);
+
     IRequests proxy(String ip, int port, String schema);
 
     /**

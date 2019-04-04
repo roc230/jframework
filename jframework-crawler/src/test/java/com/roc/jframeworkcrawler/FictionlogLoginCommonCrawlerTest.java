@@ -10,7 +10,9 @@ public class FictionlogLoginCommonCrawlerTest {
 //        task1();
 //        tast2();
         FictionlogLoginCommonCrawlerTest t = new FictionlogLoginCommonCrawlerTest();
-        t.tast3();
+//        t.tast3();
+//        t.task4();
+        t.task5();
     }
 
     @Test
@@ -41,5 +43,21 @@ public class FictionlogLoginCommonCrawlerTest {
                 .username("roc230")
                 .password("czp840527")
                 .execute("https://fictionlog.co/b/5a452dc7a6b0cc4d4937e53a");
+    }
+
+    public void task4(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(40)
+                .append(false)
+                .execute("https://fictionlog.co/b/5a60d12567d832252ce8326e"); //
+    }
+
+    public void task5(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(63)
+                .append(false)
+                .execute("https://fictionlog.co/b/5aaf8a878f8e480584499d4b");
     }
 }

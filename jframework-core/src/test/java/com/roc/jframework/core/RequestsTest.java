@@ -1,5 +1,6 @@
 package com.roc.jframework.core;
 
+import com.roc.jframework.basic.constants.ContentType;
 import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.core.component.httpclient.HttpClientUtils;
 import com.roc.jframework.core.component.httpclient.RequestsBuilder;
@@ -38,11 +39,14 @@ public class RequestsTest {
     @Test
     public void testProxy(){
 
-        String url = "http://localhost:8080/test/hello";
+        String url = "http://localhost:8080/test/a";
 
         HttpResponse r = RequestsBuilder.create()
                 .url(url)
-                .proxy("localhost", 8888, "http")
+                .userAgent(UserAgent.CHROME)
+                .contentType(ContentType.PLAIN_TEXT)
+                .charset("utf-8")
+                .proxy("192.168.1.180", 8888, "http")
                 .get();
     }
 

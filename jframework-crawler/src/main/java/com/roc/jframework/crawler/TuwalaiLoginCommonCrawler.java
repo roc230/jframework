@@ -61,39 +61,49 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
      * @param url
      */
     public void execute(String url){
-        WebDriver driver = WebDriverBuilder.create()
-                .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                .headless(true)
-                .loadImg(false)
-                .userAgent(UserAgent.CHROME)
-                .buildChrome();
-
-        if(login){
-            if(StringUtils.isAnyNullOrEmpty(username, password)){
-                System.out.println("请设置登陆用户名和密码");
-                return ;
-            }
-            login(driver, username, password);
-        }
-
-        driver.get(url);
-        TimerUtils.sleep(2000);
-
-        String novelName = null;
+        WebDriver driver = null;
+        Novel novel;
+        List<Directory> directories;
+        List<Chapter> chapters;
         try {
-            WebElement p = driver.findElement(By.cssSelector("#story-content p[title]"));
-            novelName = p.getAttribute("title");
-        } catch (Exception e) {
-            e.printStackTrace();
+            driver = WebDriverBuilder.create()
+                    .driverPath(DriverPath.CHROME_DRIVER_PATH)
+                    .headless(true)
+                    .loadImg(false)
+                    .userAgent(UserAgent.CHROME)
+                    .buildChrome();
+
+            if(login){
+                if(StringUtils.isAnyNullOrEmpty(username, password)){
+                    System.out.println("请设置登陆用户名和密码");
+                    return ;
+                }
+                login(driver, username, password);
+            }
+
+            driver.get(url);
+            TimerUtils.sleep(2000);
+
+            String novelName = null;
+            try {
+                WebElement p = driver.findElement(By.cssSelector("#story-content p[title]"));
+                novelName = p.getAttribute("title");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            novel = new Novel();
+            novel.setName(novelName);
+            novel.setUrl(url);
+
+            directories = getDirectories(driver);
+
+            chapters = getChapters(driver, directories);
+        } finally {
+            if(driver != null){
+                driver.quit();
+            }
         }
-
-        Novel novel = new Novel();
-        novel.setName(novelName);
-        novel.setUrl(url);
-
-        List<Directory> directories = getDirectories(driver);
-
-        List<Chapter> chapters = getChapters(driver, directories);
 
         novel.setDirectories(directories);
         novel.setChapters(chapters);
@@ -105,7 +115,6 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
 //        saveAsTxt(novel);
         saveAsTxt(novel, new File("d:/novel1/" + novel.getName() + ".txt"));
 
-        driver.quit();
     }
 
     public void login(WebDriver driver, String username, String password){

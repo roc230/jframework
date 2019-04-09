@@ -37,21 +37,32 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 
     @Override
     public void execute(String url) {
-        WebDriver driver = WebDriverBuilder.create()
-                .userAgent(UserAgent.CHROME)
-                .loadImg(false)
-                .headless(true)
-                .maximiazeWindow(false)
-                .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                .buildChrome();
+        Novel novel = null;
+        List<Chapter> chapters = null;
 
-        if(login){
-            login(driver, username, password);
+        WebDriver driver = null;
+        try {
+            driver = WebDriverBuilder.create()
+                    .userAgent(UserAgent.CHROME)
+                    .loadImg(false)
+                    .headless(true)
+                    .maximiazeWindow(false)
+                    .driverPath(DriverPath.CHROME_DRIVER_PATH)
+                    .buildChrome();
+
+            if(login){
+                login(driver, username, password);
+            }
+
+            novel = this.getDirectories(driver, url);
+
+            chapters = this.getChapters(driver, novel.getDirectories());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
         }
 
-        Novel novel = this.getDirectories(driver, url);
-
-        List<Chapter> chapters = this.getChapters(driver, novel.getDirectories());
 
         novel.setChapters(chapters);
 

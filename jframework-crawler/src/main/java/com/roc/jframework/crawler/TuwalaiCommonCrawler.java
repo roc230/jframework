@@ -28,32 +28,43 @@ public class TuwalaiCommonCrawler extends AbstractCrawler {
      * @param url
      */
     public void execute(String url){
-        WebDriver driver = WebDriverBuilder.create()
-                .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                .headless(true)
-                .loadImg(false)
-                .userAgent(UserAgent.CHROME)
-                .buildChrome();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        driver.get(url);
-//        TimerUtils.sleep(2000);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#tbody")));
-
-        String novelName = null;
+        WebDriver driver = null;
+        String novelName = "";
+        Novel novel = null;
+        List<Directory> directories = null;
+        List<Chapter> chapters = null;
         try {
-            WebElement p = driver.findElement(By.cssSelector("#story-content p[title]"));
-            novelName = p.getAttribute("title");
-        } catch (Exception e) {
-            e.printStackTrace();
+            driver = WebDriverBuilder.create()
+                    .driverPath(DriverPath.CHROME_DRIVER_PATH)
+                    .headless(true)
+                    .loadImg(false)
+                    .userAgent(UserAgent.CHROME)
+                    .buildChrome();
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            driver.get(url);
+//        TimerUtils.sleep(2000);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#tbody")));
+
+            novelName = null;
+            try {
+                WebElement p = driver.findElement(By.cssSelector("#story-content p[title]"));
+                novelName = p.getAttribute("title");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            novel = new Novel();
+            novel.setName(novelName);
+            novel.setUrl(url);
+
+            directories = getDirectories(driver);
+
+            chapters = getChapters(driver, directories);
+        } finally {
+            if(driver != null){
+                driver.quit();
+            }
         }
-
-        Novel novel = new Novel();
-        novel.setName(novelName);
-        novel.setUrl(url);
-
-        List<Directory> directories = getDirectories(driver);
-
-        List<Chapter> chapters = getChapters(driver, directories);
 
         novel.setDirectories(directories);
         novel.setChapters(chapters);
@@ -62,7 +73,8 @@ public class TuwalaiCommonCrawler extends AbstractCrawler {
 
         saveAsTxt(novel, new File("d:/novel1/" + novelName + ".txt"));
 
-        driver.quit();
+        System.out.println("end!");
+
     }
 
     /**
@@ -127,7 +139,7 @@ public class TuwalaiCommonCrawler extends AbstractCrawler {
      * @return
      */
     public List<Directory> getDirectories(WebDriver driver){
-
+        System.out.println("开始获取目录...");
         try {
             List<WebElement> alist = driver.findElements(By.cssSelector("#tbody a"));
             if(alist == null){
@@ -144,6 +156,7 @@ public class TuwalaiCommonCrawler extends AbstractCrawler {
                 dir.setName(title);
                 directories.add(dir);
             }
+            System.out.println("获取目录完成!");
             return directories;
         } catch (Exception e) {
             e.printStackTrace();

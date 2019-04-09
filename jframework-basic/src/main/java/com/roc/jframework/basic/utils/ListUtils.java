@@ -15,4 +15,12 @@ public class ListUtils {
     public static <T>  List<T> newArrayList(){
         return new ArrayList<>();
     }
+
+    public static <T> List<T> newArrayList(T[] array){
+        List<T> list = newArrayList();
+        for(T o : array){
+            list.add(o);
+        }
+        return list;
+    }
 }

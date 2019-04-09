@@ -37,6 +37,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>com.roc</groupId>
@@ -46,6 +51,16 @@
         <dependency>
             <groupId>com.roc</groupId>
             <artifactId>jframework-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.roc</groupId>
+            <artifactId>jframework-echarts</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.roc</groupId>
+            <artifactId>jframework-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

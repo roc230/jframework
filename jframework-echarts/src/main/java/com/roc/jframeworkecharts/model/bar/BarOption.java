@@ -1,36 +1,118 @@
 package com.roc.jframeworkecharts.model.bar;
 
+import com.roc.jframeworkecharts.model.base.BasicToolbox;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BarOption implements Serializable {
 
-    private Dataset dataset;
+    private Title title;
+    private Tooltip tooltip;
+    private Legend legend;
 
-    private XAxis xAxis;
+    private List<XAxis> xAxis;
+    private List<YAxis> yAxis;
 
-    private Series series;
+    private List<Series> series;
 
-    public Dataset getDataset() {
-        return dataset;
+    private BasicToolbox toolbox;
+
+    private Boolean calculable = true;
+
+    public Title getTitle() {
+        return title;
     }
 
-    public void setDataset(Dataset dataset) {
-        this.dataset = dataset;
+    public BarOption setTitle(Title title) {
+        this.title = title;
+        return this;
     }
 
-    public XAxis getxAxis() {
+    public Tooltip getTooltip() {
+        return tooltip;
+    }
+
+    public BarOption setTooltip(Tooltip tooltip) {
+        this.tooltip = tooltip;
+        return this;
+    }
+
+    public Legend getLegend() {
+        return legend;
+    }
+
+    public BarOption setLegend(Legend legend) {
+        this.legend = legend;
+        return this;
+    }
+
+    public List<XAxis> getxAxis() {
         return xAxis;
     }
 
-    public void setxAxis(XAxis xAxis) {
+    public void setxAxis(List<XAxis> xAxis) {
         this.xAxis = xAxis;
     }
 
-    public Series getSeries() {
+    public List<YAxis> getyAxis() {
+        return yAxis;
+    }
+
+    public void setyAxis(List<YAxis> yAxis) {
+        this.yAxis = yAxis;
+    }
+
+    public List<Series> getSeries() {
         return series;
     }
 
-    public void setSeries(Series series) {
+    public void setSeries(List<Series> series) {
         this.series = series;
+    }
+
+    public BarOption addSeries(Series... series){
+        if(this.series == null){
+            this.series = new ArrayList<>();
+        }
+        this.series.addAll(Arrays.asList(series));
+        return this;
+    }
+
+    public BarOption addXAxis(XAxis... xAxis){
+        if(this.xAxis == null){
+            this.xAxis = new ArrayList<>();
+        }
+        this.xAxis.addAll(Arrays.asList(xAxis));
+        return this;
+    }
+
+    public BarOption addYAxis(YAxis... yAxis){
+        if(this.yAxis == null){
+            this.yAxis = new ArrayList<>();
+        }
+        this.yAxis.addAll(Arrays.asList(yAxis));
+        return this;
+    }
+
+    public Boolean getCalculable() {
+        return calculable;
+    }
+
+    public BarOption setCalculable(Boolean calculable) {
+        this.calculable = calculable;
+        return this;
+    }
+
+
+    public BasicToolbox getToolbox() {
+        return toolbox;
+    }
+
+    public BarOption setToolbox(BasicToolbox toolbox) {
+        this.toolbox = toolbox;
+        return this;
     }
 }

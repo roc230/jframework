@@ -1,16 +1,25 @@
 package com.roc.jframeworkecharts.model.bar;
 
-import java.io.Serializable;
+import com.roc.jframeworkecharts.model.base.BasicXAxis;
 
-public class XAxis implements Serializable {
+public class XAxis extends BasicXAxis {
 
-    private String type = "";
-
-    public String getType() {
-        return type;
+    public static class Builder{
+        private XAxis xAxis;
+        public Builder(){
+            this.xAxis = new XAxis();
+        }
+        public Builder type(String type){
+            this.xAxis.setType(type);
+            return this;
+        }
+        public Builder addData(String... data){
+            this.xAxis.addData(data);
+            return this;
+        }
+        public XAxis build(){
+            return this.xAxis;
+        }
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 }

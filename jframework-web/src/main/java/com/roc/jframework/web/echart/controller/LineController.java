@@ -1,7 +1,6 @@
 package com.roc.jframework.web.echart.controller;
 
 import com.roc.jframework.basic.utils.ListUtils;
-import com.roc.jframeworkecharts.model.Option;
 import com.roc.jframeworkecharts.model.line.LineOption;
 import com.roc.jframeworkecharts.model.line.LineOptionBuilder;
 import org.springframework.stereotype.Controller;

@@ -1,11 +1,16 @@
 package com.roc.jframework.crawler;
 
+import com.roc.jframework.basic.utils.DateUtils;
 import com.roc.jframework.basic.utils.FileUtils;
+import com.roc.jframework.core.utils.ExcelUtils;
 import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Novel;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.util.Date;
 
 public abstract class AbstractCrawler implements ICommonCrawler{
 
@@ -107,5 +112,17 @@ public abstract class AbstractCrawler implements ICommonCrawler{
             filename = filename + "-p" + i + ".txt";
             FileUtils.saveAsFile(sb.toString(), new File(filename), true);
         }
+    }
+
+    public void addExcelLog(Novel novel, String excelfilepath){
+        XSSFWorkbook workbook = ExcelUtils.read(excelfilepath);
+        XSSFSheet sheet = ExcelUtils.getSheet(workbook, 0);
+        ExcelUtils.insertLastRowToSheet(sheet, new Object[]{sheet.getLastRowNum() + 1,
+                novel.getName(),
+                novel.getName(),
+                DateUtils.getString(new Date(), "yyyy/MM/dd"),
+                "1-"+novel.getChapters().size(),
+                novel.getUrl()});
+        ExcelUtils.saveWorkbook(workbook, excelfilepath);
     }
 }

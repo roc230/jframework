@@ -9,6 +9,7 @@ public class Series<T> implements Serializable {
     private String type = "line";
     private String stack = "";
     private List<T> data;
+    private ItemStyle itemStyle = new ItemStyle(new Normal(new Label.Builder().show(false).build()));
 
     public String getName() {
         return name;
@@ -48,5 +49,23 @@ public class Series<T> implements Serializable {
         }
         this.data.add(data);
         return this;
+    }
+
+    public ItemStyle getItemStyle() {
+        return itemStyle;
+    }
+
+    public void setItemStyle(ItemStyle itemStyle) {
+        this.itemStyle = itemStyle;
+    }
+
+    public void setItemStyle(Boolean show, String position, String color){
+        this.itemStyle = new ItemStyle(new Normal(new Label.Builder().show(show).position(position).addTextStyle("color", color).build()));
+    }
+
+    public void showData(Boolean show){
+        if(show == true){
+            this.itemStyle.getNormal().getLabel().setShow(true);
+        }
     }
 }

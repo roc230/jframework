@@ -36,6 +36,21 @@ public class SeriesBuilder<T> {
         return this;
     }
 
+    public SeriesBuilder itemStyle(ItemStyle itemStyle){
+        this.series.setItemStyle(itemStyle);
+        return this;
+    }
+
+    public SeriesBuilder itemStyle(Boolean show, String position, String color){
+        this.series.setItemStyle(show, position, color);
+        return this;
+    }
+
+    public SeriesBuilder showData(Boolean show){
+        this.series.getItemStyle().getNormal().getLabel().setShow(true);
+        return this;
+    }
+
     public Series build(){
         return this.series;
     }

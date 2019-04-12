@@ -8,6 +8,7 @@ public class BasicSeries implements Serializable {
     private String name = "";
     private String type = "";
     private List data;
+    private BasicItemStyle itemStyle = new BasicItemStyle(new BasicNormal(new BasicLabel(false)));
 
     public String getName() {
         return name;
@@ -41,5 +42,13 @@ public class BasicSeries implements Serializable {
             this.data.add(o);
         }
         return this;
+    }
+
+    public BasicItemStyle getItemStyle() {
+        return itemStyle;
+    }
+
+    public void setItemStyle(BasicItemStyle itemStyle) {
+        this.itemStyle = itemStyle;
     }
 }

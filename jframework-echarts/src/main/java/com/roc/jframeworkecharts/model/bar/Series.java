@@ -45,6 +45,10 @@ public class Series extends BasicSeries {
             this.series.setMarkLine(markLine);
             return this;
         }
+        public Builder showData(Boolean show){
+            this.series.getItemStyle().getNormal().getLabel().setShow(show);
+            return this;
+        }
         public Series build(){
             return this.series;
         }

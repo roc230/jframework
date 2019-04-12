@@ -28,7 +28,7 @@ public class RadarController {
                         .addIndicator(new Indicator.Builder().text("研发（Development）").max(52000).build())
                         .addIndicator(new Indicator.Builder().text("市场（Marketing）").max(25000).build())
                         .build())
-                .series(new Series.Builder().name("预算 vs 开销（Budget vs spending）").type("radar")
+                .series(new Series.Builder().name("预算 vs 开销（Budget vs spending）").type("radar").showData(true)
                         .addData(new NameValue<>("预算分配（Allocated Budget）", ListUtils.newArrayList(new Object[]{4300, 10000, 28000, 35000, 50000, 19000})))
                         .addData(new NameValue<>("实际开销（Actual Spending）", ListUtils.newArrayList(new Object[]{5000, 14000, 28000, 31000, 42000, 21000})))
                         .build())

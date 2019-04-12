@@ -50,6 +50,7 @@ public class BarController {
                         .addData(new HashMapExt().putE("type", "max").putE("name", "最大值"))
                         .addData(new HashMapExt().putE("type", "min").putE("name", "最小值")).build())
                 .markLine(new MarkLine.Builder().addData(new HashMapExt().putE("type", "average").putE("name", "平均值")).build())
+                .showData(true)
                 .build();
         Series series2 = new Series.Builder()
                 .name("降水量")

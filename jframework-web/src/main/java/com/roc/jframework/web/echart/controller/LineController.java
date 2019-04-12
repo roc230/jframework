@@ -1,8 +1,7 @@
 package com.roc.jframework.web.echart.controller;
 
 import com.roc.jframework.basic.utils.ListUtils;
-import com.roc.jframeworkecharts.model.line.LineOption;
-import com.roc.jframeworkecharts.model.line.LineOptionBuilder;
+import com.roc.jframeworkecharts.model.line.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,8 +24,8 @@ public class LineController {
                 .legend().addData("销量").addData("销量2").endLegend()
                 .xAxis().type("category").setData(xaxis).endXAxis()
                 .yAxis().type("value").endYAxis()
-                .series().name("销量").type("line").setData(series).endSeries()
-                .series().name("销量2").type("line").setData(series2).endSeries()
+                .series().name("销量").type("line").setData(series).showData(true).endSeries()
+                .series().name("销量2").type("line").setData(series2).showData(true).endSeries()
                 .grid().left("4%").right("4%").bottom("4%").endGrid()
                 .title().text("折线图堆叠").endTitle()
                 .build();

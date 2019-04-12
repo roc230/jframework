@@ -1,6 +1,7 @@
 package com.roc.jframework.basic.utils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ListUtils {
@@ -22,5 +23,27 @@ public class ListUtils {
             list.add(o);
         }
         return list;
+    }
+
+    /**
+     * 相反顺序
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> reverse(List<T> list){
+        List<T> l = new ArrayList<>();
+        for(int i = list.size()-1; i > -1; i--){
+            l.add(list.get(i));
+        }
+        return l;
+    }
+
+    public static <T> List<T> copy(List<T> list){
+        List<T> newlist = new ArrayList<>();
+        for(T o : list){
+            newlist.add(o);
+        }
+        return newlist;
     }
 }

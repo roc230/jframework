@@ -71,6 +71,8 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         //save as txt
         saveAsTxt(novel, new File("d:/novel1/" + novel.getName() + ".txt"));
 
+        //add excel log
+        addExcelLog(novel, "D:\\novel1\\bk\\小说抓取记录.xlsx");
 
         System.out.println("end!");
     }
@@ -128,6 +130,8 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
                 WebElement strong = SeleniumUtils.findElement(p, By.cssSelector("strong"));
                 WebElement em = SeleniumUtils.findElement(p, By.cssSelector("em"));
 //                WebElement a = SeleniumUtils.findElement(p, By.cssSelector("a"));
+                //段落内容获取
+                //如果优先取strong标记的内容，其次是em标记的内容，最后是p标记的内容
                 if(strong != null){
                     paragraph = strong.getText();
                 }else if(em != null){
@@ -135,8 +139,12 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
                 }else{
                     paragraph = p.getText();
                 }
-
+                //加入非空的内容
                 if(!StringUtils.isNullOrEmpty(paragraph)){
+                    //如果出现“======”内容，说明已至末尾，直接结束循环
+                    if(paragraph.trim().startsWith("======")){
+                        break;
+                    }
                     parapraphs.add(paragraph);
                 }
             }
@@ -160,6 +168,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 
         WebElement e = SeleniumUtils.findElement(driver, By.cssSelector(".BookHeader__BookTitle-sc-7bc82j-5"));
         if(e == null){
+            System.out.println("获取小说名称标记失败！");
             return null;
         }
         String novelName = e.getText();
@@ -170,14 +179,36 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         List<Directory> directories = ListUtils.newArrayList();
         //下拉列表
         List<WebElement> exlist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0 > .GroupChapterRow__GroupWrapper-sc-1crfeny-1"));
+        //如果下拉列表不存在，直接获取章节列表
         if(ListUtils.isNullOrEmpty(exlist)){
-            return null;
+            exlist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0 .ChapterRow__RightItems-r5e2sp-6 > a"));
+            //如果直接获取章节列表失败,直接返回
+            if(ListUtils.isNullOrEmpty(exlist)){
+                System.out.println("直接获取章节列表失败！");
+                return null;
+            }
+            for(int i = 0; i < exlist.size(); i++){
+                WebElement we = exlist.get(i);
+                String href = we.getAttribute("href");
+                String title = "";
+                WebElement ti = SeleniumUtils.findElement(we, By.cssSelector("div"));
+                if(ti != null){
+                    title = ti.getText();
+                }
+                Directory dir = new Directory();
+                dir.setUrl(href);
+                dir.setName(title);
+
+                directories.add(dir);
+            }
+            novel.setDirectories(directories);
+            return novel;
         }
         //展开所有下拉列表
         for(int i = 0; i < exlist.size(); i++){
             if(i != 0){
                 exlist.get(i).click();
-                TimerUtils.sleep(200);
+                TimerUtils.sleep(500);
             }
         }
         //获取所有章节目录
@@ -185,14 +216,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         if(ListUtils.isNullOrEmpty(cclist)){
             return null;
         }
-//        for(WebElement ee : cclist){
-//            System.out.println(ee.getText());
-//        }
 
-//        List<WebElement> alist = SeleniumUtils.findElements(driver, By.cssSelector(".GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__MainWrapper-r5e2sp-8 > div > div > a"));
-//        if(ListUtils.isNullOrEmpty(alist)){
-//            return null;
-//        }
         for(int i = 0; i < cclist.size(); i++){
 //            if(i%2 == 0){
                 WebElement we = cclist.get(i);
@@ -212,39 +236,5 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 
         novel.setDirectories(directories);
         return novel;
-
-       /* String html = RequestsBuilder.create()
-                .userAgent(UserAgent.CHROME)
-                .url(url)
-                .contentType("text/plain; charset=utf-8")
-                .header("access-control-allow-origin", "https://fictionlog.co")
-                .getAsString();
-
-        Document doc = JsoupUtils.parse(html);
-
-        String novelName = doc.selectFirst(".BookHeader__BookTitle-sc-7bc82j-5").text();
-        Novel novel = new Novel();
-        novel.setName(novelName);
-        novel.setUrl(url);
-
-        String schemaAndDomain = UrlUtils.getSchemaAndDomain(url);
-        List<Directory> directories = ListUtils.newArrayList();
-        Elements alist = doc.select(".GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__MainWrapper-r5e2sp-8 > div > div > a");
-        for(int i = 0; i < alist.size(); i++){
-            if(i%2 == 0){
-                Element a = alist.get(i);
-                String href = schemaAndDomain + a.attr("href");
-                String title = a.selectFirst("div").text();
-
-                Directory dir = new Directory();
-                dir.setUrl(href);
-                dir.setName(title);
-
-                directories.add(dir);
-            }
-            i++;
-        }
-        novel.setDirectories(directories);
-        return novel;*/
     }
 }

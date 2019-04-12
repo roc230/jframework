@@ -1,6 +1,9 @@
 package com.roc.jframeworkecharts.model.radar;
 
 import com.roc.jframework.basic.ext.NameValue;
+import com.roc.jframeworkecharts.model.base.BasicItemStyle;
+import com.roc.jframeworkecharts.model.base.BasicLabel;
+import com.roc.jframeworkecharts.model.base.BasicNormal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ public class Series implements Serializable {
     private String name = "";
     private String type = "radar";
     private List<NameValue<String,List<Object>>> data;
+    private BasicItemStyle itemStyle = new BasicItemStyle(new BasicNormal(new BasicLabel(false)));
 
     public String getName() {
         return name;
@@ -36,6 +40,14 @@ public class Series implements Serializable {
         this.data = data;
     }
 
+    public BasicItemStyle getItemStyle() {
+        return itemStyle;
+    }
+
+    public void setItemStyle(BasicItemStyle itemStyle) {
+        this.itemStyle = itemStyle;
+    }
+
     public static class Builder{
         private Series series = new Series();
         public Builder name(String name){
@@ -55,6 +67,10 @@ public class Series implements Serializable {
                 this.series.setData(new ArrayList<>());
             }
             this.series.getData().addAll(Arrays.asList(keyvalue));
+            return this;
+        }
+        public Builder showData(Boolean show){
+            this.series.getItemStyle().getNormal().getLabel().setShow(show);
             return this;
         }
         public Series build(){

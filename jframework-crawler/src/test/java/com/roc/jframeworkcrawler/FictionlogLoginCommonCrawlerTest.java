@@ -12,7 +12,11 @@ public class FictionlogLoginCommonCrawlerTest {
         FictionlogLoginCommonCrawlerTest t = new FictionlogLoginCommonCrawlerTest();
 //        t.tast3();
 //        t.task4();
-        t.task5();
+//        t.task5();
+//        t.task6();
+//        t.task7();
+//        t.task8();
+        t.task9();
     }
 
     @Test
@@ -59,5 +63,45 @@ public class FictionlogLoginCommonCrawlerTest {
                 .max(63)
                 .append(false)
                 .execute("https://fictionlog.co/b/5aaf8a878f8e480584499d4b");
+    }
+
+    public void task6(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(51)
+                .append(false)
+                .login(false)
+                .execute("https://fictionlog.co/b/5c5bd43f30fd045050873659");
+
+    }
+
+    public void task7(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(40)
+                .append(false)
+                .login(false)
+                .execute("https://fictionlog.co/b/5aaf3b12b174054bd66db6ba");
+
+    }
+
+    public void task8(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(40)
+                .append(false)
+                .login(false)
+                .execute("https://fictionlog.co/b/5addbae9d9b5d35baff50533");
+
+    }
+
+    public void task9(){
+        FictionlogLoginCommonCrawler.create()
+                .start(0)
+                .max(5)
+                .append(false)
+                .login(false)
+                .execute("https://fictionlog.co/b/5a5c7b1187f8a701dcd5449e");
+
     }
 }

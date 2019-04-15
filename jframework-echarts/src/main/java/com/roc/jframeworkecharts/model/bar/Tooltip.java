@@ -6,8 +6,14 @@ public class Tooltip extends BasicTooltip {
 
     public static class Builder{
         private Tooltip tooltip;
+        private BarOption.Builder optionBuilder;
 
         public Builder(){
+            this.tooltip = new Tooltip();
+        }
+
+        public Builder(BarOption.Builder optionBuilder){
+            this.optionBuilder = optionBuilder;
             this.tooltip = new Tooltip();
         }
 
@@ -16,9 +22,11 @@ public class Tooltip extends BasicTooltip {
             return this;
         }
 
-        public Tooltip build(){
-            return this.tooltip;
+        public BarOption.Builder endTooltip(){
+            this.optionBuilder.getOption().setTooltip(this.tooltip);
+            return this.optionBuilder;
         }
+
     }
 
 }

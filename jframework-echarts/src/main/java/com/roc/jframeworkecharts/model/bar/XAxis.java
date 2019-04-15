@@ -6,9 +6,17 @@ public class XAxis extends BasicXAxis {
 
     public static class Builder{
         private XAxis xAxis;
+        private BarOption.Builder optionBuilder;
+
         public Builder(){
             this.xAxis = new XAxis();
         }
+
+        public Builder(BarOption.Builder optionBuilder){
+            this.optionBuilder = optionBuilder;
+            this.xAxis = new XAxis();
+        }
+
         public Builder type(String type){
             this.xAxis.setType(type);
             return this;
@@ -17,9 +25,12 @@ public class XAxis extends BasicXAxis {
             this.xAxis.addData(data);
             return this;
         }
-        public XAxis build(){
-            return this.xAxis;
+
+        public BarOption.Builder endXAxis(){
+            this.optionBuilder.getOption().addXAxis(this.xAxis);
+            return this.optionBuilder;
         }
+
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MarkLine implements Serializable {
 
-    private List<HashMap<String,Object>> data;
+    private List<HashMap<String,Object>> data = new ArrayList<>();
 
     public List<HashMap<String, Object>> getData() {
         return data;

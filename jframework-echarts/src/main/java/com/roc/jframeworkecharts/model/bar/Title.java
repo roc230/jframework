@@ -6,8 +6,15 @@ public class Title extends BasicTitle {
 
     public static class Builder{
         private Title title;
+        private BarOption.Builder optionBuilder;
+
         public Builder(){
             title = new Title();
+        }
+
+        public Builder(BarOption.Builder optionBuilder){
+            this.optionBuilder = optionBuilder;
+            this.title = new Title();
         }
 
         public Builder text(String text){
@@ -20,9 +27,11 @@ public class Title extends BasicTitle {
             return this;
         }
 
-        public Title build(){
-            return this.title;
+        public BarOption.Builder endTitle(){
+            this.optionBuilder.getOption().setTitle(this.title);
+            return this.optionBuilder;
         }
+
     }
 
 }

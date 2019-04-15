@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MarkPoint {
 
-    private List<HashMapExt<String,Object>> data;
+    private List<HashMapExt<String,Object>> data = new ArrayList<>();
 
     public List<HashMapExt<String, Object>> getData() {
         return data;

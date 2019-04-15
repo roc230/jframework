@@ -18,7 +18,7 @@ public class BarOption implements Serializable {
 
     private List<Series> series;
 
-    private BasicToolbox toolbox;
+//    private BasicToolbox toolbox;
 
     private Boolean calculable = true;
 
@@ -107,12 +107,48 @@ public class BarOption implements Serializable {
     }
 
 
-    public BasicToolbox getToolbox() {
-        return toolbox;
-    }
+//    public BasicToolbox getToolbox() {
+//        return toolbox;
+//    }
+//
+//    public BarOption setToolbox(BasicToolbox toolbox) {
+//        this.toolbox = toolbox;
+//        return this;
+//    }
 
-    public BarOption setToolbox(BasicToolbox toolbox) {
-        this.toolbox = toolbox;
-        return this;
+    public static final class Builder{
+        private BarOption option = new BarOption();
+
+        public Title.Builder title(){
+            return new Title.Builder(this);
+        }
+
+        public Tooltip.Builder tooltip(){
+            return new Tooltip.Builder(this);
+        }
+
+        public Legend.Builder legend(){
+            return new Legend.Builder(this);
+        }
+
+        public XAxis.Builder xAxis(){
+            return new XAxis.Builder(this);
+        }
+
+        public YAxis.Builder yAxis(){
+            return new YAxis.Builder(this);
+        }
+
+        public Series.Builder series(){
+            return new Series.Builder(this);
+        }
+
+        public BarOption build(){
+            return this.option;
+        }
+
+        public BarOption getOption() {
+            return option;
+        }
     }
 }

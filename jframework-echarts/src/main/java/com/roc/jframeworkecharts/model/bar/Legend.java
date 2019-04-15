@@ -6,7 +6,14 @@ public class Legend extends BasicLegend {
 
     public static class Builder{
         private Legend legend;
+        private BarOption.Builder optionBuilder;
+
         public Builder(){
+            this.legend = new Legend();
+        }
+
+        public Builder(BarOption.Builder optionBuilder){
+            this.optionBuilder = optionBuilder;
             this.legend = new Legend();
         }
 
@@ -21,8 +28,11 @@ public class Legend extends BasicLegend {
             }
             return this;
         }
-        public Legend build(){
-            return this.legend;
+
+        public BarOption.Builder endLegend(){
+            this.optionBuilder.getOption().setLegend(this.legend);
+            return this.optionBuilder;
         }
+
     }
 }

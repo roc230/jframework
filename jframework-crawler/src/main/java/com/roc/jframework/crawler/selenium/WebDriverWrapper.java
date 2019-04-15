@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * WebDriver的包装器，用于实现常用功能的链式写法
+ */
 public class WebDriverWrapper {
 
     private WebDriver driver;

@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -148,4 +149,23 @@ public class ExcelUtils {
             }
         }
     }
+
+    /**
+     * 获取指定坐标单元格
+     * @param sheet sheet
+     * @param x x坐标
+     * @param y y坐标
+     * @return
+     */
+    public static XSSFCell getCell(XSSFSheet sheet, int x, int y){
+        XSSFRow row = sheet.getRow(x);
+        if(row == null){
+            return null;
+        }
+        XSSFCell cell = row.getCell(y);
+        return cell;
+    }
+
+
+
 }

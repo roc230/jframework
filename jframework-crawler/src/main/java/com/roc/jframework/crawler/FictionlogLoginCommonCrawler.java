@@ -16,6 +16,7 @@ import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
 import com.roc.jframework.crawler.selenium.DriverPath;
 import com.roc.jframework.crawler.selenium.WebDriverBuilder;
+import com.roc.jframework.crawler.selenium.WebDriverWrapper;
 import com.roc.jframework.crawler.utils.SeleniumUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

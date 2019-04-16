@@ -1,5 +1,7 @@
 package com.roc.jframework.basic.utils;
 
+import com.sun.org.apache.xpath.internal.operations.String;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +17,10 @@ public class ListUtils {
 
     public static <T>  List<T> newArrayList(){
         return new ArrayList<>();
+    }
+
+    public static <T>  List<T> newArrayList(int capacity){
+        return new ArrayList<>(capacity);
     }
 
     public static <T> List<T> newArrayList(T[] array){
@@ -45,5 +51,11 @@ public class ListUtils {
             newlist.add(o);
         }
         return newlist;
+    }
+
+    public static <T> void printList(List<T> list){
+        for(T o : list){
+            System.out.println(o.toString());
+        }
     }
 }

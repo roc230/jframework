@@ -23,6 +23,14 @@ public class DateUtils {
         return format.format(date);
     }
 
+    public static List<String> getString(List<Date> dates, String pattern){
+        List<String> list = ListUtils.newArrayList();
+        for(Date d : dates){
+            list.add(getString(d, pattern));
+        }
+        return list;
+    }
+
     /**
      * 创建指定时间对象
      * @param year 年

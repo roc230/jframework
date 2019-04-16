@@ -1,9 +1,17 @@
 package com.roc.jframework.web.echart.controller;
 
+import com.roc.jframework.basic.utils.DoubleUtils;
+import com.roc.jframework.basic.utils.IntegerUtils;
+import com.roc.jframework.basic.utils.ListUtils;
+import com.roc.jframework.core.utils.ExcelUtils;
 import com.roc.jframeworkecharts.model.linebar.LineBarOption;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @RequestMapping(value = "/echart")
 @Controller
@@ -36,6 +44,34 @@ public class LineBarController {
                 .build();
         return option;
 
+    }
+
+    @RequestMapping(value = "/tui")
+    @ResponseBody
+    public LineBarOption tui(){
+
+        XSSFWorkbook book = ExcelUtils.read("d:/android_整体趋势_20190317_20190416.xlsx");
+        XSSFSheet sheet = ExcelUtils.getSheet(book, 0);
+        List<String> days = ExcelUtils.getDateColumn(sheet, 0, "yyyy/MM/dd").get("日期");
+        days = ListUtils.reverse(days);
+
+        List<Double> newusers = ListUtils.reverse(ExcelUtils.getDoubleColumn(sheet, 1).get("新增用户"));
+
+        List<Double> activeusers = ListUtils.reverse(ExcelUtils.getDoubleColumn(sheet, 2).get("活跃用户"));
+
+        List<Double> existsRatio = ListUtils.reverse(ExcelUtils.getDoubleColumn(sheet, 5).get("次日留存率"));
+        existsRatio = DoubleUtils.multiply(existsRatio, 100D, 2);
+
+        return new LineBarOption.Builder()
+                .tooltip().trigger("axis").endTooltip()
+                .legend().addData("新增用户","活跃用户","次日留存率").endLegend()
+                .xAxis().type("category").data(days.toArray(new String[0])).endXAxis()
+                .yAxis().type("value").name("用户量").formatter("{value}人").endYAxis()
+                .yAxis().type("value").name("比率").formatter("{value}%").endYAxis()
+                .series().type("line").name("新增用户").showData(false).data(DoubleUtils.toInteger(newusers).toArray(new Integer[0])).endSeries()
+                .series().type("line").name("活跃用户").showData(false).data(DoubleUtils.toInteger(activeusers).toArray(new Integer[0])).endSeries()
+                .series().type("line").name("次日留存率").showData(false).data(existsRatio.toArray(new Double[0])).yAxisIndex(1).endSeries()
+                .build();
     }
 
 }

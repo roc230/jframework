@@ -1,10 +1,14 @@
 package com.roc.jframework.core.utils;
 
+import com.roc.jframework.basic.ext.HashMapExt;
+import com.roc.jframework.basic.utils.DateUtils;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -13,8 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Excel操作工具类
@@ -166,6 +169,110 @@ public class ExcelUtils {
         return cell;
     }
 
+    /**
+     * 获取行数
+     * @param sheet
+     * @return
+     */
+    public static int getRowCount(XSSFSheet sheet){
+        return sheet.getPhysicalNumberOfRows();
+    }
 
+    /**
+     * 获取列数
+     * @param sheet
+     * @return
+     */
+    public static int getColumnCount(XSSFSheet sheet){
+        return sheet.getRow(0).getPhysicalNumberOfCells();
+    }
+
+    /**
+     * 获取指定列
+     * @param sheet
+     * @param columnIndex
+     * @return
+     */
+    public static List<XSSFCell> getColumn(XSSFSheet sheet, int columnIndex){
+
+        List<XSSFCell> list = ListUtils.newArrayList();
+
+        for(int i = 0; i < getRowCount(sheet); i++){
+            XSSFRow row = sheet.getRow(i);
+            XSSFCell cell = row.getCell(columnIndex);
+            list.add(cell);
+        }
+        return list;
+    }
+
+    public static HashMapExt<String, List<String>> getDateColumn(XSSFSheet sheet, int columnIndex, String dateformat){
+        List<XSSFCell> list = getColumn(sheet, columnIndex);
+        List<String> l = ListUtils.newArrayList();
+        for(XSSFCell cell : list){
+           if(cell.getCellType().equals(CellType.NUMERIC)){
+                l.add(DateUtils.getString(cell.getDateCellValue(), dateformat));
+            }else if(cell.getCellType().equals(CellType.STRING)){
+                l.add(cell.getStringCellValue());
+            }else{
+                System.out.println("非日期内容将被忽略");
+            }
+        }
+        HashMapExt<String, List<String>> map = new HashMapExt<>();
+        map.putE(l.get(0), l.subList(1, l.size()));
+        return map;
+    }
+
+    public static HashMapExt<String, List<Double>> getDoubleColumn(XSSFSheet sheet, int columnIndex){
+        List<XSSFCell> list = getColumn(sheet, columnIndex);
+        List<Double> l = ListUtils.newArrayList();
+        //取第一个String为key
+        String key = "";
+        for(int i = 0; i < list.size(); i++){
+            XSSFCell cell = list.get(i);
+
+            if(cell.getCellType().equals(CellType.STRING)){
+                key = cell.getStringCellValue();
+            }else if(cell.getCellType().equals(CellType.NUMERIC)){
+                l.add(cell.getNumericCellValue());
+            }
+        }
+
+        HashMapExt<String, List<Double>> map = new HashMapExt<>();
+        map.putE(key, l);
+        return map;
+    }
+
+    public static Map<String, List<String>> getAllRows(XSSFSheet sheet){
+        Map<String,List<String>> map = new LinkedHashMap<>();
+        for(int i = 0; i < getRowCount(sheet); i++){
+            XSSFRow row = sheet.getRow(i);
+            if(row == null){
+                continue;
+            }
+            List<String> list = ListUtils.newArrayList();
+            for(int j = 0; j < row.getPhysicalNumberOfCells(); j++){
+                XSSFCell cell = row.getCell(j);
+                if(cell == null){
+                    continue;
+                }
+                String value = getString(cell);
+                list.add(value);
+            }
+            map.put(list.get(0), list.subList(1, list.size()));
+        }
+        return map;
+    }
+
+    public static String getString(XSSFCell cell){
+        if(CellType.STRING.equals(cell.getCellType())){
+            return cell.getStringCellValue();
+        }else if(CellType.NUMERIC.equals(cell.getCellType())){
+            return String.valueOf(cell.getNumericCellValue());
+        }else if(CellType.BLANK.equals(cell.getCellType())){
+            return "";
+        }else{
+            return cell.getErrorCellString();
+        }
+    }
 
 }

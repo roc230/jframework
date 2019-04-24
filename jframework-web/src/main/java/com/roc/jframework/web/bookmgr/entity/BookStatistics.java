@@ -1,44 +1,62 @@
 package com.roc.jframework.web.bookmgr.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * 书籍统计
  */
+
+@Entity
+@Table(name = "bm_book_statistics")
 public class BookStatistics implements Serializable {
 
+    @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
+    @Column(name = "id", length = 36)
     private String id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Book book;
 
     /**
      * PV
      */
+    @Column(name = "page_view")
     private Long pageView;
 
     /**
      * UV
      */
+    @Column(name = "unique_view")
     private Long uniqueView;
 
     /**
      * 充值人数
      */
+    @Column(name = "recharge_count")
     private Long rechargeCount;
 
     /**
      * 充值金额
      */
+    @Column(name = "recharge_amount")
     private Double rechargeAmount;
 
     /**
      * 消费人数
      */
+    @Column(name = "consumer_count")
     private Long consumerCount;
 
     /**
      * 消费金额
      */
+    @Column(name = "consume_amount")
     private Long consumeAmount;
 
     public String getId() {

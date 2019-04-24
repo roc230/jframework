@@ -1,56 +1,74 @@
 package com.roc.jframework.web.bookmgr.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 书箱日统计数据
  */
+@Entity
+@Table(name = "bm_book_day_statistics")
 public class BookDayStatistics implements Serializable {
 
     /**
      * ID
      */
+    @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
+    @Column(name = "id")
     private String id;
 
     /**
      * 日期
      */
-    private Date day;
+    @Column(name = "date")
+    private Date date;
 
     /**
      * 所属书
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Book book;
 
     /**
      * 访问量
      */
+    @Column(name = "page_view")
     private Long pageView;
 
     /**
      * 唯一用户访问量
      */
+    @Column(name = "unique_view")
     private Long uniqueView;
 
     /**
      * 充值人数
      */
+    @Column(name = "recharge_count")
     private Long rechargeCount;
 
     /**
      * 充值金额
      */
+    @Column(name = "recharge_amount")
     private Double rechargeAmount;
 
     /**
      * 消费人数
      */
+    @Column(name = "consumer_count")
     private Long consumerCount;
 
     /**
      * 消费金额
      */
+    @Column(name = "consume_amount")
     private Long consumeAmount;
 
     public String getId() {
@@ -61,12 +79,12 @@ public class BookDayStatistics implements Serializable {
         this.id = id;
     }
 
-    public Date getDay() {
-        return day;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Book getBook() {

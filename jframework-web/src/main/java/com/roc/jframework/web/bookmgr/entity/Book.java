@@ -1,6 +1,5 @@
 package com.roc.jframework.web.bookmgr.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -68,6 +67,10 @@ public class Book implements Serializable {
      */
     @Column(name = "update_time")
     private Date updateTime;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", length = 12)
+    private BookStatus status;
 
     public String getId() {
         return id;

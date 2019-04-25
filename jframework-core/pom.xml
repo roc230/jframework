@@ -72,6 +72,12 @@
             <version>4.1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.umeng</groupId>
+            <artifactId>api-client</artifactId>
+            <version>1.0</version>
+        </dependency>
+
 
 
 

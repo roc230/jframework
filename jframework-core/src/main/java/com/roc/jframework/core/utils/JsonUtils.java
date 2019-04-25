@@ -17,4 +17,9 @@ public class JsonUtils {
                 .create()
                 .fromJson(json, classOfT);
     }
+
+    public static void printJson(Object obj){
+        String json = toString(obj);
+        System.out.println(json);
+    }
 }

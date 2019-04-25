@@ -7,7 +7,7 @@ public class UrlEncodeDecodeUtilsTest {
 
     @Test
     public void test(){
-        String txt = "hello world";
+        String txt = "薄少，求你行行好";
         String encode = UrlEndecodeUtils.encode(txt, "utf-8");
         System.out.println(encode);
 

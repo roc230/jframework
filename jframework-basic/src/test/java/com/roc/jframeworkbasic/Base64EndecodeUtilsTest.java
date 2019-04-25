@@ -7,7 +7,7 @@ public class Base64EndecodeUtilsTest {
 
     @Test
     public void test(){
-        String txt = "hello world";
+        String txt = "薄少，求你行行好";
         String encode = Base64EndecodeUtils.encode(txt);
         String decode = Base64EndecodeUtils.decode(encode);
 

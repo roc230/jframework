@@ -1,6 +1,5 @@
 package com.roc.jframeworkcrawler;
 
-import com.roc.jframework.crawler.FictionlogCommonCrawler;
 import com.roc.jframework.crawler.FictionlogLoginCommonCrawler;
 import org.junit.Test;
 
@@ -10,25 +9,26 @@ public class FictionlogLoginCommonCrawlerTest {
 //        task1();
 //        tast2();
         FictionlogLoginCommonCrawlerTest t = new FictionlogLoginCommonCrawlerTest();
+        t.task1();
 //        t.tast3();
 //        t.task4();
 //        t.task5();
 //        t.task6();
 //        t.task7();
 //        t.task8();
-        t.task9();
+//        t.task9();
     }
 
-    @Test
     public void task1(){
         FictionlogLoginCommonCrawler.create()
-                .start(0)
-                .max(40)
+                .start(40)
+                .max(10)
                 .append(false)
+                .headless(false)
+                .login(true).username("JUNsomm").password("0775LINJUN")
                 .execute("https://fictionlog.co/b/5a461801a6b0cc4d4938174b");
     }
 
-    @Test
     public void tast2(){
         FictionlogLoginCommonCrawler.create()
                 .start(0)

@@ -47,6 +47,13 @@ public interface ICommonCrawler {
     ICommonCrawler password(String password);
 
     /**
+     * 是否开启无头模式
+     * @param headless
+     * @return
+     */
+    ICommonCrawler headless(Boolean headless);
+
+    /**
      * 执行抓取
      * @param url
      */

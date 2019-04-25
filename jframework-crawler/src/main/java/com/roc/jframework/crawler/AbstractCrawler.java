@@ -20,6 +20,7 @@ public abstract class AbstractCrawler implements ICommonCrawler{
     protected Boolean login = false;
     protected String username;
     protected String password;
+    protected Boolean headless = false;
 
     @Override
     public AbstractCrawler start(Integer start){
@@ -54,6 +55,12 @@ public abstract class AbstractCrawler implements ICommonCrawler{
     @Override
     public ICommonCrawler password(String password) {
         this.password = password;
+        return this;
+    }
+
+    @Override
+    public ICommonCrawler headless(Boolean headless) {
+        this.headless = headless;
         return this;
     }
 

@@ -1,26 +1,17 @@
 package com.roc.jframework.crawler;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.roc.jframework.basic.constants.UserAgent;
+import com.roc.jframework.basic.exception.ParamValueErrorException;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.TimerUtils;
-import com.roc.jframework.basic.utils.UrlUtils;
-import com.roc.jframework.core.component.httpclient.RequestsBuilder;
-import com.roc.jframework.core.utils.JsoupUtils;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
 import com.roc.jframework.crawler.selenium.DriverPath;
 import com.roc.jframework.crawler.selenium.WebDriverBuilder;
-import com.roc.jframework.crawler.selenium.WebDriverWrapper;
 import com.roc.jframework.crawler.utils.SeleniumUtils;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.sun.javafx.binding.StringFormatter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,7 +37,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
             driver = WebDriverBuilder.create()
                     .userAgent(UserAgent.CHROME)
                     .loadImg(false)
-                    .headless(true)
+                    .headless(super.headless)
                     .maximiazeWindow(false)
                     .driverPath(DriverPath.CHROME_DRIVER_PATH)
                     .buildChrome();
@@ -99,12 +90,12 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 
     private List<Chapter> getChapters(WebDriver driver, List<Directory> directories){
         if(start < 0 || max > directories.size()){
-            System.out.println("参数错误");
-            return null;
+            throw new ParamValueErrorException("参数错误");
         }
 
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
+        System.out.printf("总共%d章", directories.size());
         List<Chapter> chapters = ListUtils.newArrayList();
         for(int i = start; i < (start+max); i++){
             Directory directory = directories.get(i);
@@ -169,8 +160,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
 
         WebElement e = SeleniumUtils.findElement(driver, By.cssSelector(".BookHeader__BookTitle-sc-7bc82j-5"));
         if(e == null){
-            System.out.println("获取小说名称标记失败！");
-            return null;
+            throw new NullPointerException("获取小说名称标记失败！");
         }
         String novelName = e.getText();
         Novel novel = new Novel();
@@ -185,8 +175,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
             exlist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0 .ChapterRow__RightItems-r5e2sp-6 > a"));
             //如果直接获取章节列表失败,直接返回
             if(ListUtils.isNullOrEmpty(exlist)){
-                System.out.println("直接获取章节列表失败！");
-                return null;
+                throw new NullPointerException("直接获取章节列表失败！");
             }
             for(int i = 0; i < exlist.size(); i++){
                 WebElement we = exlist.get(i);
@@ -206,6 +195,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
             return novel;
         }
         //展开所有下拉列表
+        TimerUtils.sleep(500);
         for(int i = 0; i < exlist.size(); i++){
             if(i != 0){
                 exlist.get(i).click();
@@ -215,7 +205,7 @@ public class FictionlogLoginCommonCrawler extends AbstractCrawler {
         //获取所有章节目录
         List<WebElement> cclist = SeleniumUtils.findElements(driver, By.cssSelector(".TableOfContent__ChapterListSection-cl18wo-0  .GroupChapterRow__GroupChapterList-sc-1crfeny-0 .ChapterRow__RightItems-r5e2sp-6 > a"));
         if(ListUtils.isNullOrEmpty(cclist)){
-            return null;
+            throw new RuntimeException("章节目录为空");
         }
 
         for(int i = 0; i < cclist.size(); i++){

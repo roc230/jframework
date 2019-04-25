@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 /**
  * WebDriver的包装器，用于实现常用功能的链式写法
  */
@@ -39,7 +41,17 @@ public class WebDriverWrapper {
             WebElement e = this.driver.findElement(by);
             return e;
         } catch (Exception e1) {
-            e1.printStackTrace();
+//            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<WebElement> findElements(By by){
+        try {
+            List<WebElement> list = this.driver.findElements(by);
+            return list;
+        } catch (Exception e1) {
+//            e1.printStackTrace();
         }
         return null;
     }

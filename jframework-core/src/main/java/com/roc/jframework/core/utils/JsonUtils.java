@@ -1,6 +1,10 @@
 package com.roc.jframework.core.utils;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class JsonUtils {
 
@@ -16,6 +20,20 @@ public class JsonUtils {
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create()
                 .fromJson(json, classOfT);
+    }
+
+    /**
+     *
+     * @param json
+     * @param typeOfT 写法：new TypeToken<List<T>>(){}.getType()
+     * @param <T>
+     * @return
+     */
+    public static <T> T fromJson(String json, Type typeOfT){
+        return new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create()
+                .fromJson(json, typeOfT);
     }
 
     public static void printJson(Object obj){

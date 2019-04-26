@@ -120,4 +120,15 @@ public class StringUtils {
         first = Character.toUpperCase(first);
         return first + str.substring(1);
     }
+
+    /**
+     * 首字母小写
+     * @param str
+     * @return
+     */
+    public static String lowercaseFirstChar(String str){
+        char first = str.charAt(0);
+        first = Character.toLowerCase(first);
+        return first + str.substring(1);
+    }
 }

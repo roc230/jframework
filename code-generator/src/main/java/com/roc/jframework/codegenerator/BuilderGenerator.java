@@ -34,6 +34,12 @@ public class BuilderGenerator {
         return code.substring(0, index);
     }*/
 
+    /**
+     * 生成setter代码
+     * @param field
+     * @param margin
+     * @return
+     */
     private static String setter(Field field, int margin){
         StringBuffer sb = new StringBuffer();
         String type = field.getType().getSimpleName();
@@ -46,6 +52,12 @@ public class BuilderGenerator {
         return sb.toString();
     }
 
+    /**
+     * 生成字段代码
+     * @param field
+     * @param margin
+     * @return
+     */
     private static String field(Field field, int margin){
         String type = field.getType().getSimpleName();
         String name = field.getName();
@@ -54,6 +66,12 @@ public class BuilderGenerator {
         return sb.toString();
     }
 
+    /**
+     * 生成build()方法代码
+     * @param clazz
+     * @param margin
+     * @return
+     */
     private static String build(Class clazz, int margin){
         List<Field> fields = ReflectionUtils.getFields(clazz);
         String className = clazz.getSimpleName();
@@ -77,6 +95,12 @@ public class BuilderGenerator {
         return sb.toString();
     }
 
+    /**
+     * 生成整个builder类代码
+     * @param clazz 实体类
+     * @param margin
+     * @return
+     */
     public static String builder(Class clazz, int margin){
         String className = clazz.getSimpleName();
         StringBuffer sb = new StringBuffer();

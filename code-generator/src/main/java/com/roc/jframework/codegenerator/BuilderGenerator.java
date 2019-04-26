@@ -117,7 +117,7 @@ public class BuilderGenerator {
             sb.append(setter(f, margin + 4));
         }
 
-        sb.append(build(clazz, 8));
+        sb.append(build(clazz, margin + 4));
 
         sb.append(SpaceUtils.space(margin)).append("}\n");
         return sb.toString();

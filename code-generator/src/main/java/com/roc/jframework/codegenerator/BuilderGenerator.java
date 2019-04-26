@@ -1,6 +1,5 @@
 package com.roc.jframework.codegenerator;
 
-import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.basic.utils.ReflectionUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 
@@ -9,30 +8,6 @@ import java.util.List;
 
 public class BuilderGenerator {
 
-    /*public String readSourceCode(String filepath) {
-        String code = FileUtils.readAsString(filepath);
-        code = removeFinalChar(code);
-        System.out.println(code);
-        return null;
-    }
-    public String addBuilderCode(String code){
-        StringBuffer sb = new StringBuffer(code);
-        sb.append("public static final class Builder{").append("\n")
-                .append(SpaceUtils.space(4));
-        return sb.toString();
-    }
-
-    public String removeFinalChar(String code){
-        char[] chars = code.toCharArray();
-        int index = -1;
-        for(int i = chars.length - 1; i > 0; i--){
-            if(chars[i] == '}'){
-                index = i;
-                break;
-            }
-        }
-        return code.substring(0, index);
-    }*/
 
     /**
      * 生成setter代码
@@ -106,6 +81,7 @@ public class BuilderGenerator {
         StringBuffer sb = new StringBuffer();
         sb.append(SpaceUtils.space(margin)).append("public static final class Builder{\n");
 
+        //生成类属性部分
         List<Field> fields = ReflectionUtils.getFields(clazz);
         for(Field f : fields){
             String type = f.getType().getSimpleName();
@@ -113,10 +89,12 @@ public class BuilderGenerator {
             sb.append(SpaceUtils.space(margin + 4)).append("private ").append(type).append(" ").append(name).append(";\n");
         }
 
+        //生成setter方法部分
         for(Field f : fields){
             sb.append(setter(f, margin + 4));
         }
 
+        //生成buid()方法部分
         sb.append(build(clazz, margin + 4));
 
         sb.append(SpaceUtils.space(margin)).append("}\n");

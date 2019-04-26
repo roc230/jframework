@@ -6,6 +6,12 @@ import java.lang.reflect.Field;
 
 public class GetSetterGenerator {
 
+    /**
+     * 生成setter代码
+     * @param field 域
+     * @param margin 边距
+     * @return
+     */
     public static String getter(Field field, int margin){
         StringBuffer sb = new StringBuffer();
         sb.append(SpaceUtils.space(margin)).append("public ").append(field.getType().getSimpleName())
@@ -15,6 +21,12 @@ public class GetSetterGenerator {
         return sb.toString();
     }
 
+    /**
+     * 生成getter方法代码
+     * @param field 域
+     * @param margin 边距
+     * @return
+     */
     public static String setter(Field field, int margin){
         StringBuffer sb = new StringBuffer();
         String type = field.getType().getSimpleName();

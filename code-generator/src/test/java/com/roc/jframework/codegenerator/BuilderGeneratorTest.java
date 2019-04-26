@@ -1,6 +1,5 @@
 package com.roc.jframework.codegenerator;
 
-import com.roc.jframework.codegenerator.entity.Field;
 import org.junit.Test;
 
 public class BuilderGeneratorTest {
@@ -12,7 +11,7 @@ public class BuilderGeneratorTest {
 
     @Test
     public void test_builder(){
-        String code = BuilderGenerator.builder(Field.class, 4);
-        System.out.println(code);
+//        String code = BuilderGenerator.builder(Field.class, 4);
+//        System.out.println(code);
     }
 }

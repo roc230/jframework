@@ -109,4 +109,15 @@ public class StringUtils {
         }
         return null;
     }
+
+    /**
+     * 把第一个字母变成大写
+     * @param str
+     * @return
+     */
+    public static String uppercaseFirstChar(String str){
+        char first = str.charAt(0);
+        first = Character.toUpperCase(first);
+        return first + str.substring(1);
+    }
 }

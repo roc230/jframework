@@ -11,11 +11,12 @@ public class BuilderGenerator {
 
     /**
      * 生成setter代码
+     *
      * @param field
      * @param margin
      * @return
      */
-    private static String setter(Field field, int margin){
+    private static String setter(Field field, int margin) {
         StringBuffer sb = new StringBuffer();
         String type = field.getType().getSimpleName();
         String name = field.getName();
@@ -29,11 +30,12 @@ public class BuilderGenerator {
 
     /**
      * 生成字段代码
+     *
      * @param field
      * @param margin
      * @return
      */
-    private static String field(Field field, int margin){
+    private static String field(Field field, int margin) {
         String type = field.getType().getSimpleName();
         String name = field.getName();
         StringBuffer sb = new StringBuffer();
@@ -43,11 +45,12 @@ public class BuilderGenerator {
 
     /**
      * 生成build()方法代码
+     *
      * @param clazz
      * @param margin
      * @return
      */
-    private static String build(Class clazz, int margin){
+    private static String build(Class clazz, int margin) {
         List<Field> fields = ReflectionUtils.getFields(clazz);
         String className = clazz.getSimpleName();
 
@@ -57,7 +60,7 @@ public class BuilderGenerator {
                 .append(SpaceUtils.space(margin + 4)).append(className).append(" ").append(StringUtils.lowercaseFirstChar(className))
                 .append(" = new ").append(className).append("();\n");
 
-        for(Field f : fields){
+        for (Field f : fields) {
             String type = f.getType().getSimpleName();
             String name = f.getName();
             sb.append(SpaceUtils.space(margin + 4)).append(StringUtils.lowercaseFirstChar(className))
@@ -72,25 +75,26 @@ public class BuilderGenerator {
 
     /**
      * 生成整个builder类代码
-     * @param clazz 实体类
+     *
+     * @param clazz  实体类
      * @param margin
      * @return
      */
-    public static String builder(Class clazz, int margin){
+    public static String builder(Class clazz, int margin) {
         String className = clazz.getSimpleName();
         StringBuffer sb = new StringBuffer();
         sb.append(SpaceUtils.space(margin)).append("public static final class Builder{\n");
 
         //生成类属性部分
         List<Field> fields = ReflectionUtils.getFields(clazz);
-        for(Field f : fields){
+        for (Field f : fields) {
             String type = f.getType().getSimpleName();
             String name = f.getName();
             sb.append(SpaceUtils.space(margin + 4)).append("private ").append(type).append(" ").append(name).append(";\n");
         }
 
         //生成setter方法部分
-        for(Field f : fields){
+        for (Field f : fields) {
             sb.append(setter(f, margin + 4));
         }
 

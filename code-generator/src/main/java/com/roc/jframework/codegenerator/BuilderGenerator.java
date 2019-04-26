@@ -61,7 +61,6 @@ public class BuilderGenerator {
                 .append(" = new ").append(className).append("();\n");
 
         for (Field f : fields) {
-            String type = f.getType().getSimpleName();
             String name = f.getName();
             sb.append(SpaceUtils.space(margin + 4)).append(StringUtils.lowercaseFirstChar(className))
                     .append(".set").append(StringUtils.uppercaseFirstChar(name)).append("(this.").append(name).append(");\n");
@@ -81,7 +80,6 @@ public class BuilderGenerator {
      * @return
      */
     public static String builder(Class clazz, int margin) {
-        String className = clazz.getSimpleName();
         StringBuffer sb = new StringBuffer();
         sb.append(SpaceUtils.space(margin)).append("public static final class Builder{\n");
 

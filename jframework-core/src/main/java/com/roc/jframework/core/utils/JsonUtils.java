@@ -11,6 +11,7 @@ public class JsonUtils {
     public static String toString(Object obj){
         return new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .disableHtmlEscaping()
                 .create()
                 .toJson(obj);
     }

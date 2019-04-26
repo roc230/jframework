@@ -5,27 +5,29 @@ import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.core.utils.ExcelUtils;
 import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.crawler.novellist.KyreaderCrawler;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.util.List;
 
 public class KyreaderCrawlerTest {
+
+    private static final String filename = "kyread-3";
+
     @Test
     public void test(){
         KyreaderCrawler crawler = new KyreaderCrawler();
-        List<KyreaderCrawler.NovelInfo> list = crawler.getInfo("https://novel.1789a.com/index.php?s=/Update/get_cont_data/channel/%E5%85%A8%E9%83%A8/p/100.html", 100);
+        List<KyreaderCrawler.NovelInfo> list = crawler.getInfo("https://novel.1789a.com/index.php?s=/Update/get_cont_data/channel/%E5%85%A8%E9%83%A8/p/200.html", 100);
         String json = JsonUtils.toString(list);
-        FileUtils.saveAsFile(json, "d:/kyread-2.json", true);
+        FileUtils.saveAsFile(json, filename + ".json", true);
     }
 
-    @Test
-    public void saveAsExcel(){
-        String json = FileUtils.readAsString("d:/kyread-2.json");
+    @AfterClass
+    public static void saveAsExcel(){
+        String json = FileUtils.readAsString(filename + ".json");
         List<KyreaderCrawler.NovelInfo> list = JsonUtils.fromJson(json, new TypeToken<List<KyreaderCrawler.NovelInfo>>(){}.getType());
 
         XSSFWorkbook book = ExcelUtils.newWorkbook();
@@ -49,6 +51,6 @@ public class KyreaderCrawlerTest {
             r.createCell(5).setCellValue(ni.getCoverImg());
         }
 
-        ExcelUtils.saveWorkbook(book, "d:/kyread-2.xlsx");
+        ExcelUtils.saveWorkbook(book, filename + ".xlsx");
     }
 }

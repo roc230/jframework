@@ -1,5 +1,6 @@
 package com.roc.jframework.codegenerator;
 
+import com.roc.jframework.basic.utils.ClipboardUtils;
 import com.roc.jframework.basic.utils.ReflectionUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 
@@ -76,10 +77,11 @@ public class BuilderGenerator {
      * 生成整个builder类代码
      *
      * @param clazz  实体类
-     * @param margin
+     * @param margin 边距
+     * @param setClipboard 是否加入到粘贴板
      * @return
      */
-    public static String builder(Class clazz, int margin) {
+    public static String builder(Class clazz, int margin, boolean setClipboard) {
         StringBuffer sb = new StringBuffer();
         sb.append(SpaceUtils.space(margin)).append("public static final class Builder{\n");
 
@@ -100,6 +102,10 @@ public class BuilderGenerator {
         sb.append(build(clazz, margin + 4));
 
         sb.append(SpaceUtils.space(margin)).append("}\n");
-        return sb.toString();
+        String str = sb.toString();
+        if(setClipboard){
+            ClipboardUtils.setSysClipboardTxt(str);
+        }
+        return str;
     }
 }

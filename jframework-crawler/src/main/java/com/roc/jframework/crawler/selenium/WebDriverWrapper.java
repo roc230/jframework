@@ -26,6 +26,10 @@ public class WebDriverWrapper {
             return wrapper;
     }
 
+    public WebDriver getWebDriver(){
+        return this.driver;
+    }
+
     public WebDriverWrapper get(String url){
         this.driver.get(url);
         return this;

@@ -90,7 +90,11 @@ public class BuilderGenerator {
         for (Field f : fields) {
             String type = f.getType().getSimpleName();
             String name = f.getName();
-            sb.append(SpaceUtils.space(margin + 4)).append("private ").append(type).append(" ").append(name).append(";\n");
+            if("enable".equals(name)){//enable属性默认值
+                sb.append(SpaceUtils.space(margin + 4)).append("private ").append(type).append(" ").append(name).append(" = true").append(";\n");
+            }else{
+                sb.append(SpaceUtils.space(margin + 4)).append("private ").append(type).append(" ").append(name).append(";\n");
+            }
         }
 
         //生成setter方法部分

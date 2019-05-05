@@ -4,6 +4,14 @@ import java.util.List;
 
 public class IntegerUtils {
 
+    public static boolean isInteger(String str){
+        String r = StringUtils.findByReg(str, "(^\\d)+", 1);
+        if(r == null){
+            return true;
+        }
+        return false;
+    }
+
     public static List<Integer> toInteger(String... strs){
         List<Integer> list = ListUtils.newArrayList();
         for(String s : strs){

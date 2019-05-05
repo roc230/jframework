@@ -20,6 +20,8 @@ import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
+;
+
 public abstract class AbstractRequests implements IRequests {
 
     protected Map<String,String> params;

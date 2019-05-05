@@ -4,7 +4,6 @@ import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.TimerUtils;
-import com.roc.jframework.crawler.entity.Novel;
 import com.roc.jframework.crawler.selenium.DriverPath;
 import com.roc.jframework.crawler.selenium.WebDriverBuilder;
 import com.roc.jframework.crawler.selenium.WebDriverWrapper;

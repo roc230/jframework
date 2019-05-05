@@ -1,5 +1,6 @@
 package com.roc.jframework.crawler.selenium;
 
+import com.roc.jframework.basic.utils.TimerUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,6 +38,11 @@ public class WebDriverWrapper {
 
     public WebDriverWrapper untilElementPresence(By by){
         this.wait.until(ExpectedConditions.presenceOfElementLocated(by));
+        return this;
+    }
+
+    public WebDriverWrapper sleep(long milliseconds){
+        TimerUtils.sleep(milliseconds);
         return this;
     }
 

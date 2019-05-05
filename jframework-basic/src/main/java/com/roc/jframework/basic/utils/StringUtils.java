@@ -66,6 +66,15 @@ public class StringUtils {
         return null;
     }
 
+    public static String replaceByReg(String content, String reg, String replacement){
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(content);
+        if(matcher.find()){
+            return matcher.replaceAll(replacement);
+        }
+        return null;
+    }
+
     public static Integer toInteger(String str){
         return Integer.valueOf(str);
     }

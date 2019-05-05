@@ -1,5 +1,7 @@
 package com.roc.jframework.crawler.novelweb;
 
+import com.roc.jframework.basic.utils.IntegerUtils;
+import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.core.utils.ExcelUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -30,7 +32,8 @@ public class NovelInfoHelper {
             r.createCell(1).setCellValue(ni.getAuthor());
             r.createCell(2).setCellValue(ni.getCategory());
             r.createCell(3).setCellValue(ni.getStatus());
-            r.createCell(4).setCellValue(Integer.valueOf(ni.getClickCount()));
+
+            r.createCell(4).setCellValue(StringUtils.isNullOrEmpty(ni.getClickCount()) ? 0: Integer.valueOf(ni.getClickCount()));
             r.createCell(5).setCellValue(ni.getWords());
             r.createCell(6).setCellValue(ni.getBrief());
             r.createCell(7).setCellValue(ni.getUrl());

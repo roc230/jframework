@@ -16,7 +16,7 @@ public class HongxiuCrawlerTest {
     @Test
     public void test(){
         List<NovelInfo> list = HongxiuCrawler.create()
-                .execute("https://www.hongxiu.com/all?pageNum=1&pageSize=10&gender=2&catId=30020&isFinish=-1&isVip=-1&size=6&updT=-1&orderBy=0", 2);
+                .execute("https://www.hongxiu.com/all?pageNum=1&pageSize=10&gender=2&catId=30020&isFinish=-1&isVip=-1&size=6&updT=-1&orderBy=0", 100);
         JsonUtils.printJson(list);
         NovelInfoHelper.saveAsExcel(list, "d:/hongxiu.xlsx");
     }

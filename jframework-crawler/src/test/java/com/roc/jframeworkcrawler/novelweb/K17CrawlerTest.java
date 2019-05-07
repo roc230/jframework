@@ -16,7 +16,7 @@ public class K17CrawlerTest {
     @Test
     public void test(){
         List<NovelInfo> list = K17Crawler.create()
-                .execute("http://all.17k.com/lib/book/3_17_134_1_____151.html", 50);
+                .execute("http://all.17k.com/lib/book/3_17_134_1_____301.html", 50);
         JsonUtils.printJson(list);
         NovelInfoHelper.saveAsExcel(list, "d:/17k.xlsx");
     }

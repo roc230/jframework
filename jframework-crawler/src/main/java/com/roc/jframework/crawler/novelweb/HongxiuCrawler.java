@@ -82,7 +82,8 @@ public class HongxiuCrawler {
                     status = spanlist.get(1).getText();
                     words = spanlist.get(2).getText();
                     words = words.replace("万", "");
-                    words = String.valueOf(Double.valueOf(words) * 10000);
+                    Double tmp = Double.valueOf(words) * 10000;
+                    words = String.valueOf(tmp.intValue());
                 }
 
                 NovelInfo novelInfo = new NovelInfo.Builder()

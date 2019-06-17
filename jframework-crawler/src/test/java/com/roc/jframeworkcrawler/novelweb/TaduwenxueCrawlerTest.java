@@ -14,7 +14,7 @@ public class TaduwenxueCrawlerTest {
     @Test
     public void test(){
         List<NovelInfo> list = TaduwenxueCrawler.create()
-                .execute("http://www.tadu.com/store/131-a-1-5-a-20-p-1-122", 17);
+                .execute("http://www.tadu.com/store/131-a-2-5-a-20-p-1-122", 27);
         JsonUtils.printJson(list);
         NovelInfoHelper.saveAsExcel(list, "d:/taduwenxue.xlsx");
     }

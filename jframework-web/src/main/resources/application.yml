@@ -6,6 +6,14 @@ spring:
     name: jframework-web
   thymeleaf:
     prefix: classpath:/templates/
+    cache: false
+    check-template-location: true
+    template-resolver-order: 1
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    mode: HTML5
   resources:
     static-locations: classpath:/static/,classpath:/templates/
   mvc:
@@ -27,5 +35,14 @@ spring:
 
 
 
+
 server:
   port: 8080
+
+security:
+  basic:
+    enabled: false
+  user:
+    name: admin
+    password: 123456
+

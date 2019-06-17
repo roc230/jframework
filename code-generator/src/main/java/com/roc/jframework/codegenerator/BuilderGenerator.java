@@ -7,6 +7,9 @@ import com.roc.jframework.basic.utils.StringUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * 为POJO类生成Builder代码
+ */
 public class BuilderGenerator {
 
 

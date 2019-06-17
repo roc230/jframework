@@ -83,9 +83,14 @@ public class TaduwenxueCrawler {
                 String words = null;
                 List<WebElement> spans = SeleniumUtils.findElements(e, By.cssSelector(".condition span"));
                 if(spans.size() > 1){
-                    words = spans.get(1).getText().replace("万字", "");
-                    Double tmp = Double.valueOf(words) * 10000;
-                    words = String.valueOf(tmp.intValue());
+                    words = spans.get(1).getText();
+                    if(words.contains("万字")){
+                        words = words.replace("万字", "").trim();
+                        Double tmp = Double.valueOf(words) * 10000;
+                        words = String.valueOf(tmp.intValue());
+                    }else if(words.contains("字")){
+                        words = words.replace("字", "").trim();
+                    }
                 }
                 String status = SeleniumUtils.findElement(e, By.cssSelector(".condition a")).getText();
                 status = status.equals("完结") ? "已完结" : "连载中";

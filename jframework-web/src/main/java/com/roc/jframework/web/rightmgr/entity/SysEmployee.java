@@ -1,15 +1,16 @@
 package com.roc.jframework.web.rightmgr.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class SysEmployee implements Serializable {
 
     @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
     private String id;
 
     private String name;
@@ -60,5 +61,13 @@ public class SysEmployee implements Serializable {
 
     public void setAccount(SysAccount account) {
         this.account = account;
+    }
+
+    public SysOrganization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(SysOrganization organization) {
+        this.organization = organization;
     }
 }

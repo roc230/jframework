@@ -1,6 +1,8 @@
 package com.roc.jframeworkweb;
 
 import com.roc.jframework.codegenerator.BuilderGenerator;
+import com.roc.jframework.web.rightmgr.entity.SysRole;
+import com.roc.jframework.web.rightmgr.vo.MenuVO;
 import com.roc.jframework.web.webcrawler.entity.Category;
 import com.roc.jframework.web.webcrawler.entity.NovelSite;
 import com.roc.jframework.web.webcrawler.entity.WebNovel;
@@ -10,6 +12,6 @@ public class CodeGeneratorTest {
 
     @Test
     public void builder(){
-        BuilderGenerator.builder(NovelSite.class, 8, true);
+        BuilderGenerator.builder(MenuVO.class, 8, true);
     }
 }

@@ -1,5 +1,7 @@
 package com.roc.jframework.web.rightmgr.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,11 +10,13 @@ import java.util.List;
 public class SysAccount implements Serializable {
 
     @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
     private String id;
 
     private String loginName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "sys_account_role",
             joinColumns = {@JoinColumn(name = "account_id")},

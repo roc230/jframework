@@ -31,6 +31,11 @@ public class SysMenu implements Serializable {
 
     private String description;
 
+    /**
+     * 序号，用于设置菜单顺序
+     */
+    private Integer index = 0;
+
     @ManyToOne
     private SysSystem system;
 
@@ -96,5 +101,29 @@ public class SysMenu implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public SysSystem getSystem() {
+        return system;
+    }
+
+    public void setSystem(SysSystem system) {
+        this.system = system;
     }
 }

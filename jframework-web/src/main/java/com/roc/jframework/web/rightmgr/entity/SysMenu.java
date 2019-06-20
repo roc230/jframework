@@ -34,7 +34,8 @@ public class SysMenu implements Serializable {
     /**
      * 序号，用于设置菜单顺序
      */
-    private Integer index = 0;
+    @Column
+    private Integer indexNo = 0;
 
     @ManyToOne
     private SysSystem system;
@@ -111,12 +112,12 @@ public class SysMenu implements Serializable {
         this.actionType = actionType;
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getIndexNo() {
+        return indexNo;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setIndexNo(Integer indexNo) {
+        this.indexNo = indexNo;
     }
 
     public SysSystem getSystem() {

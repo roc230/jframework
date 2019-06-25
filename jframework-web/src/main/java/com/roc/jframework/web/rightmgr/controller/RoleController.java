@@ -4,11 +4,9 @@ import com.roc.jframework.web.rightmgr.entity.SysRole;
 import com.roc.jframework.web.rightmgr.service.IRoleService;
 import com.roc.jframework.web.rightmgr.vo.RoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,5 +34,17 @@ public class RoleController {
                 .build();
         this.roleService.saveRole(role, roleVO.getOperatorId(), Arrays.asList(roleVO.getPermissionIds()));
         return "";
+    }
+
+    @RequestMapping(value = "/page/{pageNum}/{pageSize}")
+    @ResponseBody
+    public Page getRolesByPage(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize){
+        Page p = this.roleService.getRolesByPage(pageNum, pageSize);
+        List<SysRole> roles = p.getContent();
+        for(SysRole r : roles){
+            r.setAccounts(null);
+            r.setPermissions(null);
+        }
+        return p;
     }
 }

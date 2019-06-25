@@ -12,6 +12,20 @@ public interface IMenuService {
      */
     List<SysMenu> getAllEnable();
 
+
+    /**
+     * 获取根节点
+     * @return
+     */
+    List<SysMenu> getRootMenus();
+
+    /**
+     * 获取子菜单
+     * @param menuId
+     * @return
+     */
+    List<SysMenu> getChildren(String menuId);
+
     SysMenu getById(String id);
 
     /**

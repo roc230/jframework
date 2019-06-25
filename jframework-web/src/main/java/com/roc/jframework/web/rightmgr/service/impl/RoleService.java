@@ -7,7 +7,11 @@ import com.roc.jframework.web.rightmgr.dao.ISysRoleDAO;
 import com.roc.jframework.web.rightmgr.entity.SysPermission;
 import com.roc.jframework.web.rightmgr.entity.SysRole;
 import com.roc.jframework.web.rightmgr.service.IRoleService;
+import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,4 +79,9 @@ public class RoleService implements IRoleService {
         this.sysRoleDAO.disable(roleId);
     }
 
+    @Override
+    public Page<SysRole> getRolesByPage(Integer pageNum, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        return this.sysRoleDAO.findAll(pageable);
+    }
 }

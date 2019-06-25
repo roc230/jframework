@@ -24,4 +24,9 @@ public class LoginController {
     public String hello(){
         return "hello admin";
     }
+
+    @RequestMapping("/home")
+    public String home(){
+        return "home3";
+    }
 }

@@ -96,4 +96,17 @@ public class MenuService implements IMenuService {
     public void delete(String menuId) {
         this.sysMenuDAO.deleteById(menuId);
     }
+
+    @Override
+    public List<SysMenu> getChildren(String menuId) {
+        if(StringUtils.isNullOrEmpty(menuId)){
+            menuId = null;
+        }
+        return this.sysMenuDAO.getChildren(menuId);
+    }
+
+    @Override
+    public List<SysMenu> getRootMenus() {
+        return this.sysMenuDAO.getRootMenus();
+    }
 }

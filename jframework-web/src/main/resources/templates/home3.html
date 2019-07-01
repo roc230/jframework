@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+
+
+<div id="app">
+    <el-container style="height: 500px; border: 1px solid #eee">
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+            <el-menu v-for="m in menus">
+                <el-menu-item v-if="m.children.length < 1" v-on:click="clickMenu">{{m.name}}</el-menu-item>
+                <el-submenu v-bind:index="m.id" v-else>
+                    <template slot="title"><i class="el-icon-message"></i>{{m.name}}</template>
+                    <el-menu-item-group v-for="s in m.children">
+                        <el-menu-item v-bind:index="s.id"> <router-link to="/role">{{s.name}}</router-link></el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+        <el-container>
+            <el-header style="text-align: right; font-size: 12px">
+                <el-dropdown>
+                    <i class="el-icon-setting" style="margin-right: 15px"></i>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>查看</el-dropdown-item>
+                        <el-dropdown-item>新增</el-dropdown-item>
+                        <el-dropdown-item>删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <span>王小虎</span>
+            </el-header>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
+        </el-container>
+    </el-container>
+
+    <!-- route outlet -->
+    <!-- component matched by the route will render here -->
+    <!--<router-view></router-view>-->
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    // These can be imported from other files
+    // import Employee2 from './employee.vue'
+
+    const Employee = { template: '<div>Employee</div>'}
+    const Role = { template: '<div>Role</div>'}
+
+    // 2. Define some routes
+    // Each route should map to a component. The "component" can
+    // either be an actual component constructor created via
+    // `Vue.extend()`, or just a component options object.
+    // We'll talk about nested routes later.
+    const routes = [
+        { path: '/employee', component: Employee},
+        { path: '/role', component: Role},
+        { path: '/e2', component: require('./Employee.vue')}
+    ]
+
+    // 3. Create the router instance and pass the `routes` option
+    // You can pass in additional options here, but let's
+    // keep it simple for now.
+    const router = new VueRouter({
+    routes // short for `routes: routes`
+    })
+
+    // 4. Create and mount the root instance.
+    // Make sure to inject the router with the router option to make the
+    // whole app router-aware.
+    const app = new Vue({
+        el: '#app',
+        router,
+        data: function(){
+            return {
+                visible: false,
+                menus:[]
+            }
+        },
+        methods:{
+            getMenus: function(){
+                axios.get('http://127.0.0.1:8080/menu/by/roc')
+                    .then((r) => {
+                    console.log(r.data);
+                this.menus = r.data;
+            })
+            .catch(function(e){
+                    console.log(e);
+                });
+            },
+            clickMenu: function(){
+                this.$router.push('/employee');
+            }
+        },
+        components:{
+
+        },
+        created(){
+            this.getMenus();
+        }
+    })
+
+    // Now the app has started!
+</script>
+</body>
+</html>

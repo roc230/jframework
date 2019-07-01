@@ -14,10 +14,19 @@ public interface IRoleService {
      * 保存角色
      * @param role
      * @param operatorId
-     * @param permissionIds
+     * @param permissionNames
      * @return
      */
-    SysRole saveRole(SysRole role, String operatorId, List<String> permissionIds);
+    SysRole saveRole(SysRole role, String operatorId, List<String> permissionNames);
+
+    /**
+     * 修改角色
+     * @param role
+     * @param operatorId
+     * @param permissionNames
+     * @return
+     */
+    SysRole updateRole(SysRole role, String operatorId, List<String> permissionNames);
 
     /**
      * 删除角色

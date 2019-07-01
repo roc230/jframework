@@ -3,6 +3,7 @@ package com.roc.jframework.web.rightmgr.service.impl;
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.web.rightmgr.dao.ISysMenuDAO;
 import com.roc.jframework.web.rightmgr.entity.SysMenu;
+import com.roc.jframework.web.rightmgr.entity.SysPermission;
 import com.roc.jframework.web.rightmgr.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,9 @@ public class MenuService implements IMenuService {
                 SysMenu parent = this.sysMenuDAO.getById(parentId);
                 menu.setParent(parent);
             }
+            SysPermission p = new SysPermission();
+            p.setMenu(menu);
+            menu.setPermission(p);
             return this.sysMenuDAO.save(menu);
         }else{
             throw new RuntimeException("本方法只支付新增，请所有更新方法");

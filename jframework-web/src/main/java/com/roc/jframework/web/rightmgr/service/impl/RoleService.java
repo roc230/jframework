@@ -36,7 +36,7 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public SysRole saveRole(SysRole role, String operatorId, List<String> permissionIds) {
+    public SysRole saveRole(SysRole role, String operatorId, List<String> permissionNames) {
 
         if(role == null){
 
@@ -47,7 +47,7 @@ public class RoleService implements IRoleService {
         }
 
 //        SysAccount account = this.sysAccountDAO.findById(operatorId).get();
-        List<SysPermission> permissions = this.sysPermissionDAO.findSysPermissionsByIdIn(permissionIds);
+        List<SysPermission> permissions = this.sysPermissionDAO.getByNames(permissionNames);
 
         //ID为空，是新创建
         if(StringUtils.isNullOrEmpty(role.getId())){
@@ -76,12 +76,26 @@ public class RoleService implements IRoleService {
         if(StringUtils.isNullOrEmpty(roleId)){
             return ;
         }
-        this.sysRoleDAO.disable(roleId);
+        this.sysRoleDAO.deleteById(roleId);
     }
 
     @Override
     public Page<SysRole> getRolesByPage(Integer pageNum, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         return this.sysRoleDAO.findAll(pageable);
+    }
+
+    @Override
+    public SysRole updateRole(SysRole role, String operatorId, List<String> permissionNames) {
+
+        List<SysPermission> permissions = this.sysPermissionDAO.getByNames(permissionNames);
+
+        SysRole old = this.sysRoleDAO.getOne(role.getId());
+        old.setName(role.getName());
+        old.setEnable(true);
+        old.setLatestOperateTime(new Date());
+        old.setPermissions(permissions);
+        old.setDescription(role.getDescription());
+        return this.sysRoleDAO.save(old);
     }
 }

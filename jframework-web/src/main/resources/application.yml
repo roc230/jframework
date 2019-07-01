@@ -39,10 +39,10 @@ spring:
 server:
   port: 8080
 
-security:
-  basic:
-    enabled: false
-  user:
-    name: admin
-    password: 123456
+#security:
+#  basic:
+#    enabled: false
+#  user:
+#    name: admin
+#    password: 123456
 

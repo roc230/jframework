@@ -4,6 +4,6 @@ public enum  OrganizationType {
     COMPANY,
     SUB_COMPANY,
     DEPARTMENT,
-    SUB_DEPATMENT,
+    SUB_DEPARTMENT,
     STATION;
 }

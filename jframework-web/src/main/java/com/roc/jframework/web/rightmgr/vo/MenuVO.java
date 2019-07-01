@@ -1,9 +1,8 @@
 package com.roc.jframework.web.rightmgr.vo;
 
-import com.roc.jframework.web.rightmgr.entity.SysMenu;
-import com.roc.jframework.web.rightmgr.entity.SysSystem;
-
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuVO implements Serializable {
     private String id;
@@ -18,11 +17,19 @@ public class MenuVO implements Serializable {
 
     private String parentId;
 
+    private String parentName;
+
     private Boolean enable = true;
 
     private String description;
 
     private String systemId;
+
+    private Integer index;
+
+    private String label;
+
+    private List<MenuVO> children = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -96,6 +103,45 @@ public class MenuVO implements Serializable {
         this.systemId = systemId;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public List<MenuVO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<MenuVO> children) {
+        this.children = children;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void addChild(MenuVO menuVO){
+        if(this.children == null){
+            this.children = new ArrayList<>();
+        }
+        this.children.add(menuVO);
+    }
+
     public static final class Builder{
         private String id;
         private String name;
@@ -103,9 +149,11 @@ public class MenuVO implements Serializable {
         private String url;
         private String icon;
         private String parentId;
+        private String parentName;
         private Boolean enable = true;
         private String description;
         private String systemId;
+        private Integer index;
         public Builder id(String id){
             this.id = id;
             return this;
@@ -142,6 +190,14 @@ public class MenuVO implements Serializable {
             this.systemId = systemId;
             return this;
         }
+        public Builder index(Integer index){
+            this.index = index;
+            return this;
+        }
+        public Builder parentName(String parentName){
+            this.parentName = parentName;
+            return this;
+        }
         public MenuVO build(){
             MenuVO menuVO = new MenuVO();
             menuVO.setId(this.id);
@@ -153,6 +209,9 @@ public class MenuVO implements Serializable {
             menuVO.setEnable(this.enable);
             menuVO.setDescription(this.description);
             menuVO.setSystemId(this.systemId);
+            menuVO.setIndex(this.index);
+            menuVO.setLabel(this.name);
+            menuVO.setParentName(this.parentName);
             return menuVO;
         }
     }

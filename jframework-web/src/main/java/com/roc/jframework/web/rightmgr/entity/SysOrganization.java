@@ -1,5 +1,7 @@
 package com.roc.jframework.web.rightmgr.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,12 +12,16 @@ import java.io.Serializable;
 public class SysOrganization implements Serializable {
 
     @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
     private String id;
 
     @Enumerated(EnumType.STRING)
     private OrganizationType type;
 
     private String name;
+
+    private String code;
 
     private Boolean enable = true;
 
@@ -70,5 +76,13 @@ public class SysOrganization implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

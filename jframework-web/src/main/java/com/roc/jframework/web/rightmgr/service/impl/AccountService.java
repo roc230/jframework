@@ -7,8 +7,6 @@ import com.roc.jframework.web.rightmgr.entity.SysAccount;
 import com.roc.jframework.web.rightmgr.entity.SysPermission;
 import com.roc.jframework.web.rightmgr.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class AccountService implements IAccountService {
     public Account getByLoginName(String loginName) {
         SysAccount account = this.sysAccountDAO.getByLoginName(loginName);
         if(account == null){
-            throw new UsernameNotFoundException("admin: " + loginName + " do not exist!");
+//            throw new UsernameNotFoundException("admin: " + loginName + " do not exist!");
         }
         List<SysPermission> permissions = this.sysPermissionDAO.findAll();
         return null;

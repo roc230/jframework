@@ -48,6 +48,8 @@ public class SysRole implements Serializable {
     @ManyToMany(mappedBy = "roles")
     private List<SysAccount> accounts;
 
+    private String description;
+
     public String getId() {
         return id;
     }
@@ -104,6 +106,14 @@ public class SysRole implements Serializable {
         this.latestOperateTime = latestOperateTime;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static final class Builder{
         private String id;
         private String name;
@@ -112,6 +122,7 @@ public class SysRole implements Serializable {
         private Date latestOperateTime;
         private List permissions;
         private List accounts;
+        private String description;
         public Builder id(String id){
             this.id = id;
             return this;
@@ -140,6 +151,10 @@ public class SysRole implements Serializable {
             this.accounts = accounts;
             return this;
         }
+        public Builder description(String description){
+            this.description = description;
+            return this;
+        }
         public SysRole build(){
             SysRole sysRole = new SysRole();
             sysRole.setId(this.id);
@@ -149,6 +164,7 @@ public class SysRole implements Serializable {
             sysRole.setLatestOperateTime(this.latestOperateTime);
             sysRole.setPermissions(this.permissions);
             sysRole.setAccounts(this.accounts);
+            sysRole.setDescription(this.description);
             return sysRole;
         }
     }

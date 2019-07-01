@@ -9,8 +9,10 @@ public class RoleVO implements Serializable {
     private String name;
     private Boolean enable;
     private String[] permissionIds;
+    private String[] permissionNames;
     private Date latestUpdateTime;
     private String operatorId;
+    private String description;
 
     public String getId() {
         return id;
@@ -58,5 +60,21 @@ public class RoleVO implements Serializable {
 
     public void setOperatorId(String operatorId) {
         this.operatorId = operatorId;
+    }
+
+    public String[] getPermissionNames() {
+        return permissionNames;
+    }
+
+    public void setPermissionNames(String[] permissionNames) {
+        this.permissionNames = permissionNames;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

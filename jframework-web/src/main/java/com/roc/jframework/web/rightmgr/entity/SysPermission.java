@@ -1,5 +1,7 @@
 package com.roc.jframework.web.rightmgr.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,11 +9,13 @@ import java.io.Serializable;
 public class SysPermission implements Serializable {
 
     @Id
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "jpa-uuid")
     private String id;
     private String name;
     private String url;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "menu_id")
     private SysMenu menu;
 
@@ -46,4 +50,5 @@ public class SysPermission implements Serializable {
     public void setMenu(SysMenu menu) {
         this.menu = menu;
     }
+
 }

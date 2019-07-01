@@ -25,15 +25,35 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
     public String saveRole(@RequestBody RoleVO roleVO){
         SysRole role = new SysRole.Builder()
                 .id(roleVO.getId())
                 .enable(roleVO.getEnable())
                 .name(roleVO.getName())
+                .description(roleVO.getDescription())
                 .latestOperateTime(roleVO.getLatestUpdateTime())
                 .build();
-        this.roleService.saveRole(role, roleVO.getOperatorId(), Arrays.asList(roleVO.getPermissionIds()));
+        this.roleService.saveRole(role, roleVO.getOperatorId(), Arrays.asList(roleVO.getPermissionNames()));
         return "";
+    }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public String updateRole(@RequestBody RoleVO roleVO){
+        SysRole role = new SysRole();
+        role.setId(roleVO.getId());
+        role.setName(roleVO.getName());
+        role.setDescription(roleVO.getDescription());
+        this.roleService.updateRole(role, roleVO.getOperatorId(), Arrays.asList(roleVO.getPermissionNames()));
+        return "success";
+    }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public String deleteRole(@RequestParam("id") String roleId){
+        this.roleService.deleteRole(roleId, null);
+        return "success";
     }
 
     @RequestMapping(value = "/page/{pageNum}/{pageSize}")

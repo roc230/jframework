@@ -2,7 +2,6 @@ package com.roc.jframework.crawler;
 
 import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.core.component.myhttpclient.HttpRequests;
-import com.roc.jframework.core.utils.JsonUtils;
 import com.roc.jframework.core.utils.JsoupUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

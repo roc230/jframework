@@ -68,7 +68,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
         try {
             driver = WebDriverBuilder.create()
                     .driverPath(DriverPath.CHROME_DRIVER_PATH)
-                    .headless(true)
+                    .headless(super.headless)
                     .loadImg(false)
                     .userAgent(UserAgent.CHROME)
                     .buildChrome();
@@ -183,7 +183,7 @@ public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
             driver.get(dir.getUrl());
             TimerUtils.sleep(2000);
 
-            List<WebElement> plist = SeleniumUtils.findElements(driver, By.cssSelector("#story-detail p"));
+            List<WebElement> plist = SeleniumUtils.findElements(driver, By.cssSelector(".story-detail p"));
             if(ListUtils.isNullOrEmpty(plist)){
                 return null;
             }

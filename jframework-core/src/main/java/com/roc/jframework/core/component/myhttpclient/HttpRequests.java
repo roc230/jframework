@@ -2,12 +2,19 @@ package com.roc.jframework.core.component.myhttpclient;
 
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.core.utils.InputStreamUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthenticationStrategy;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -28,6 +35,8 @@ public class HttpRequests {
     private String url;
 
     private String userAgent;
+
+    private Proxy proxy;
 
     private Map<String,String> header = new HashMap<>();
     private Map<String,String> body = new HashMap<>();
@@ -77,12 +86,65 @@ public class HttpRequests {
         return this;
     }
 
+    /**
+     * 设置代理，不密码密码方式
+     * @param ip
+     * @param port
+     * @return
+     */
+    public HttpRequests proxy(String ip, int port){
+        if(!StringUtils.isNullOrEmpty(ip) && port != -1){
+            Proxy proxy = new Proxy();
+            proxy.setIp(ip);
+            proxy.setPort(port);
+            this.proxy  = proxy;
+        }
+        return this;
+    }
+
+    /**
+     * 设置代理，需要密码方式
+     * @param ip
+     * @param port
+     * @param username
+     * @param password
+     * @return
+     */
+    public HttpRequests proxy(String ip, int port, String username, String password){
+        if(!StringUtils.isNullOrEmpty(ip) && port != -1){
+            Proxy proxy = new Proxy();
+            proxy.setIp(ip);
+            proxy.setPort(port);
+            proxy.setUsername(username);
+            proxy.setPassword(password);
+            this.proxy  = proxy;
+        }
+        return this;
+    }
+
     public HttpResponse execute(){
         HttpClientBuilder builder  = HttpClientBuilder.create();
+        //set UserAgent
         if(!StringUtils.isNullOrEmpty(userAgent)){
             builder.setUserAgent(userAgent);
         }
+        //设置代理
+        if(this.proxy != null){
+            //没有密码
+            if(StringUtils.isAnyNullOrEmpty(this.proxy.getUsername(), this.proxy.getPassword())){
+                builder.setProxy(new HttpHost(proxy.getIp(), proxy.getPort()));
+            }else{//有密码
+                CredentialsProvider provider = new BasicCredentialsProvider();
+                AuthScope authScope = new AuthScope(this.proxy.getIp(), this.proxy.getPort());
+                Credentials credentials = new UsernamePasswordCredentials(this.proxy.getUsername(), this.proxy.getPassword());
+                provider.setCredentials(authScope, credentials);
+                builder.setDefaultCredentialsProvider(provider);
+            }
+
+        }
+
         CloseableHttpClient httpClient = builder.build();
+        //set request method
         if(StringUtils.isNullOrEmpty(methodName)){
             throw new RuntimeException("请设置请求方法: get or post");
         }
@@ -134,5 +196,44 @@ public class HttpRequests {
             }
         }
         return null;
+    }
+
+    class Proxy{
+        private String ip;
+        private int port;
+        private String username;
+        private String password;
+
+        public String getIp() {
+            return ip;
+        }
+
+        public void setIp(String ip) {
+            this.ip = ip;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        public void setPort(int port) {
+            this.port = port;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
     }
 }

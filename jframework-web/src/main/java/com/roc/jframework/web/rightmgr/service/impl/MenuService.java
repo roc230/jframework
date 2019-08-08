@@ -76,6 +76,7 @@ public class MenuService implements IMenuService {
             old.setName(menu.getName());
             old.setType(menu.getType());
             old.setUrl(menu.getUrl());
+            old.setIndexNo(menu.getIndexNo());
             return this.sysMenuDAO.save(old);
         }else{
             throw new RuntimeException("本方法只支持更新，请所有新增方法");

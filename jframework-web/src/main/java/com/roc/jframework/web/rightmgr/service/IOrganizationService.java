@@ -1,5 +1,6 @@
 package com.roc.jframework.web.rightmgr.service;
 
+import com.roc.jframework.basic.constants.ServiceResult;
 import com.roc.jframework.web.rightmgr.entity.SysOrganization;
 
 import java.util.List;
@@ -48,6 +49,13 @@ public interface IOrganizationService {
     SysOrganization get(String id);
 
     /**
+     * 获取多个
+     * @param ids
+     * @return
+     */
+    List<SysOrganization> getByIds(String... ids);
+
+    /**
      * 逻辑删除
      * @param id
      */
@@ -57,7 +65,7 @@ public interface IOrganizationService {
      * 物理删除
      * @param id
      */
-    void delete(String id);
+    ServiceResult delete(String id);
 
 
 }

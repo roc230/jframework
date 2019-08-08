@@ -1,6 +1,7 @@
 package com.roc.jframework.web.rightmgr.service.impl;
 
 import com.roc.jframework.web.accountmgr.entity.Account;
+import com.roc.jframework.web.entity.ExeResult;
 import com.roc.jframework.web.rightmgr.dao.ISysAccountDAO;
 import com.roc.jframework.web.rightmgr.dao.ISysPermissionDAO;
 import com.roc.jframework.web.rightmgr.entity.SysAccount;
@@ -19,7 +20,7 @@ public class AccountService implements IAccountService {
     private ISysPermissionDAO sysPermissionDAO;
 
     @Override
-    public Account getByLoginName(String loginName) {
+    public ExeResult<SysAccount> getByLoginName(String loginName) {
         SysAccount account = this.sysAccountDAO.getByLoginName(loginName);
         if(account == null){
 //            throw new UsernameNotFoundException("admin: " + loginName + " do not exist!");

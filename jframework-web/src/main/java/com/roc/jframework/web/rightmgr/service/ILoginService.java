@@ -1,9 +1,17 @@
 package com.roc.jframework.web.rightmgr.service;
 
 
+import com.roc.jframework.web.entity.ExeResult;
+
 public interface ILoginService {
 
-    Boolean existsLoginName(String loginName);
+    ExeResult<Boolean> existsLoginName(String loginName);
 
-    String login(String loginName, String password);
+    /**
+     * 如果登陆成功返回jwt token
+     * @param loginName
+     * @param password
+     * @return
+     */
+    ExeResult<String> login(String loginName, String password);
 }

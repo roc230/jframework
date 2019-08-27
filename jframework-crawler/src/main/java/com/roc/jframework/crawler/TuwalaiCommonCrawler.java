@@ -2,6 +2,7 @@ package com.roc.jframework.crawler;
 
 import com.roc.jframework.basic.constants.UserAgent;
 import com.roc.jframework.basic.utils.ListUtils;
+import com.roc.jframework.crawler.common.AbstractCrawler;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;

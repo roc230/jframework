@@ -10,6 +10,7 @@ import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.UrlUtils;
 import com.roc.jframework.core.component.httpclient.RequestsBuilder;
 import com.roc.jframework.core.utils.JsoupUtils;
+import com.roc.jframework.crawler.common.AbstractCrawler;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;

@@ -2,11 +2,11 @@ package com.roc.jframework.crawler;
 
 import com.roc.jframework.basic.utils.TimerUtils;
 import com.roc.jframework.core.utils.JsoupUtils;
+import com.roc.jframework.crawler.common.AbstractCrawler;
 import com.roc.jframework.crawler.utils.SeleniumUtils;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class LitnetCrawler extends AbstractCrawler {

@@ -6,6 +6,7 @@ import com.roc.jframework.basic.utils.TimerUtils;
 import com.roc.jframework.basic.utils.UrlUtils;
 import com.roc.jframework.core.component.myhttpclient.HttpRequests;
 import com.roc.jframework.core.utils.JsoupUtils;
+import com.roc.jframework.crawler.common.AbstractCrawler;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;

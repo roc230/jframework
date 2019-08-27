@@ -1,7 +1,6 @@
-package com.roc.jframework.crawler;
+package com.roc.jframework.crawler.common;
 
 import com.roc.jframework.crawler.entity.Novel;
-import com.sun.org.apache.bcel.internal.generic.ICONST;
 
 import java.io.File;
 
@@ -62,4 +61,5 @@ public interface ICommonCrawler {
     void saveAsJson(Novel novel, File file);
 
     void saveAsTxt(Novel novel, File file);
+
 }

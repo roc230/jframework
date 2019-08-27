@@ -1,11 +1,10 @@
 package com.roc.jframework.crawler;
 
 import com.roc.jframework.basic.constants.UserAgent;
-import com.roc.jframework.basic.utils.FileUtils;
 import com.roc.jframework.basic.utils.ListUtils;
 import com.roc.jframework.basic.utils.StringUtils;
 import com.roc.jframework.basic.utils.TimerUtils;
-import com.roc.jframework.core.utils.JsonUtils;
+import com.roc.jframework.crawler.common.AbstractCrawler;
 import com.roc.jframework.crawler.entity.Chapter;
 import com.roc.jframework.crawler.entity.Directory;
 import com.roc.jframework.crawler.entity.Novel;
@@ -18,9 +17,8 @@ import org.openqa.selenium.WebElement;
 
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class TuwalaiLoginCommonCrawler extends AbstractCrawler{
+public class TuwalaiLoginCommonCrawler extends AbstractCrawler {
 
     public static TuwalaiLoginCommonCrawler create(){
         return new TuwalaiLoginCommonCrawler();

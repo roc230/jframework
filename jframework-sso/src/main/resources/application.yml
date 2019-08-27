@@ -1,0 +1,14 @@
+server:
+  port: 8090
+security:
+  oauth2:
+    client:
+      client-id: 233668646673605
+      client-secret: 33b17e044ee6a4fa383f46ec6e28ea1d
+      access-token-uri:
+      user-authorization-uri:
+      token-name: oauth_token
+      authentication-scheme: query
+      client-authentication-scheme: form
+    resource:
+      user-info-uri:

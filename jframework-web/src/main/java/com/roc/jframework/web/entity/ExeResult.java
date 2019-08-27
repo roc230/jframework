@@ -65,6 +65,10 @@ public class ExeResult<T> implements Serializable {
         return r;
     }
 
+    public boolean isSuccess(){
+        return ResultCode.SUCCESS == this.code;
+    }
+
     public int getCode() {
         return code;
     }

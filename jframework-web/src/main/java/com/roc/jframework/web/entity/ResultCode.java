@@ -13,4 +13,8 @@ public class ResultCode {
 
     //token
     public static final int TOKEN_EXPIRED = 501;
+
+    //login
+    public static final int EMPTY_LOGIN_NAME_OR_PASSWORD = 1200;
+    public static final int WRONG_PASSWORD = 1201;
 }

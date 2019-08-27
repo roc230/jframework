@@ -20,6 +20,7 @@ spring:
     static-path-pattern: /**
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   jpa:
     database: mysql
     show-sql: true

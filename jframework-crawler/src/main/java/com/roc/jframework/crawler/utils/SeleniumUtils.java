@@ -1,11 +1,10 @@
 package com.roc.jframework.crawler.utils;
 
 import com.roc.jframework.basic.constants.UserAgent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.HashMap;
 import java.util.List;
@@ -109,5 +108,74 @@ public class SeleniumUtils {
             e1.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 同步执行JS
+     * @param driver
+     * @param js
+     * @param params
+     * @return
+     */
+    public static Object executeJS(WebDriver driver, String js, Object params){
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        return executor.executeScript(js, params);
+    }
+
+    /**
+     * 异步执行JS
+     * @param driver
+     * @param js
+     * @param params
+     * @return
+     */
+    public static Object executeAsyncJS(WebDriver driver, String js, Object params){
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        return executor.executeAsyncScript(js, params);
+    }
+
+    /**
+     * 点击操作
+     * @param driver
+     * @param by
+     */
+    public static void click(WebDriver driver, By by){
+        WebElement e = driver.findElement(by);
+        if(e == null){
+            throw new RuntimeException("没找到要点击的元素");
+        }
+        e.click();
+    }
+
+    /**
+     * 消除内容操作
+     * @param driver
+     * @param by
+     */
+    public static void clear(WebDriver driver, By by){
+        WebElement e = driver.findElement(by);
+        if(e == null){
+            throw new RuntimeException("没找到要消除内容的元素");
+        }
+        e.clear();
+    }
+
+    /**
+     * 查找Select页面元素
+     * @param driver
+     * @param by
+     * @return
+     */
+    public static Select findSelectElement(WebDriver driver, By by){
+        WebElement e = driver.findElement(by);
+        if(e == null){
+            throw new RuntimeException("没找到Select元素");
+        }
+        Select s = new Select(e);
+        return s;
+    }
+
+    public static Alert getAlert(WebDriver driver){
+        return driver.switchTo().alert();
     }
 }

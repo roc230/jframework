@@ -16,6 +16,8 @@ public class SysAccount implements Serializable {
 
     private String loginName;
 
+    private String password;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "sys_account_role",
@@ -46,5 +48,13 @@ public class SysAccount implements Serializable {
 
     public void setRoles(List<SysRole> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

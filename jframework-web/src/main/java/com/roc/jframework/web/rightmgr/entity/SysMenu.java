@@ -16,6 +16,9 @@ public class SysMenu implements Serializable {
     @GeneratedValue(generator = "jpa-uuid")
     private String id;
 
+    @Version
+    private int version;
+
     private String name;
 
     @Enumerated(EnumType.STRING)

@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class SysEmployee implements Serializable {
@@ -15,6 +16,12 @@ public class SysEmployee implements Serializable {
 
     private String name;
 
+    private String sex;
+
+    private Date birthday;
+
+    private Date joinTime;
+
     private Boolean enable = true;
 
     /**
@@ -25,11 +32,25 @@ public class SysEmployee implements Serializable {
     private SysAccount account;
 
     /**
-     * 所属组织
+     * 公司
      */
-    @OneToOne
-    @JoinColumn(name = "organization_id")
-    private SysOrganization organization;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    private SysOrganization company;
+
+    /**
+     * 部门
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private SysOrganization department;
+
+    /**
+     * 岗位
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "station_id")
+    private SysOrganization station;
 
     public String getId() {
         return id;
@@ -63,11 +84,51 @@ public class SysEmployee implements Serializable {
         this.account = account;
     }
 
-    public SysOrganization getOrganization() {
-        return organization;
+    public SysOrganization getCompany() {
+        return company;
     }
 
-    public void setOrganization(SysOrganization organization) {
-        this.organization = organization;
+    public void setCompany(SysOrganization company) {
+        this.company = company;
+    }
+
+    public SysOrganization getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(SysOrganization department) {
+        this.department = department;
+    }
+
+    public SysOrganization getStation() {
+        return station;
+    }
+
+    public void setStation(SysOrganization station) {
+        this.station = station;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
     }
 }

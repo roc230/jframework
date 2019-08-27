@@ -10,7 +10,8 @@ public class TuwalaiLoginCommonCrawlerTest {
 //        crawl2();
 //        crawl3();
 //        crawl4();
-        crawl5();
+//        crawl5();
+        crawl6();
     }
 
     public static void crawl1(){
@@ -57,6 +58,16 @@ public class TuwalaiLoginCommonCrawlerTest {
         TuwalaiLoginCommonCrawler.create()
                 .start(0)
                 .max(57)
+                .append(false)
+                .execute(url);
+    }
+
+    public static void crawl6(){
+        String url = "http://www.tunwalai.com/story/289164/%E0%B8%88%E0%B8%9A%E0%B9%81%E0%B8%A5%E0%B9%89%E0%B8%A7-%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B9%84%E0%B8%A1%E0%B9%89%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%8B%E0%B8%B2%E0%B8%95%E0%B8%B2%E0%B8%99-nc20-%E0%B8%AD%E0%B9%88%E0%B8%B2%E0%B8%99%E0%B8%9F%E0%B8%A3%E0%B8%B5%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B9%80%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%8D";
+        TuwalaiLoginCommonCrawler.create()
+                .headless(false)
+                .start(0)
+                .max(92)
                 .append(false)
                 .execute(url);
     }

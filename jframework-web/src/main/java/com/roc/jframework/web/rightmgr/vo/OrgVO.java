@@ -1,5 +1,7 @@
 package com.roc.jframework.web.rightmgr.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,21 @@ public class OrgVO implements Serializable {
 
     private String name;
 
+    /**
+     * UI的树控件参数，与name一致
+     */
+    private String label;
+
+    /**
+     * UI级联选择控件参数，与id一致
+     */
+    private String value;
+
     private String code;
 
     private Boolean enable;
 
     private String type;
-
-    private String label;
 
     private Boolean hasChildren = false;
 
@@ -106,5 +116,11 @@ public class OrgVO implements Serializable {
         this.label = label;
     }
 
+    public String getValue() {
+        return value;
+    }
 
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

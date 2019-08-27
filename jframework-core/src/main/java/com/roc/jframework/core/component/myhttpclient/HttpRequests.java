@@ -190,7 +190,9 @@ public class HttpRequests {
             e.printStackTrace();
         }finally {
             try {
-                closeableHttpResponse.close();
+                if(closeableHttpResponse != null){
+                    closeableHttpResponse.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
